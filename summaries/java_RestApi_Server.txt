@@ -1,0 +1,516 @@
+---
+
+#pro-site description: minimal java Rest API tutorial from scratch for beginners.
+
+Lately, I've been diving into API automation. It started with writing simple scripts to test endpoints, then turned into exploring how backend systems actually **work**. One day, I thought — why not try building my own API from scratch?
+
+I didn't want to build something overly complex. I just wanted something that felt like a "real" backend but also let me play with the basics like handling requests, reading data, updating internal state, and returning some JSON.
+
+So I made a simple REST API that does just one thing: tracks products I purchase and gives me the total profit with customer details.
+
+(Note: This Article is meant for people who is new to Api Developement)
+
+---
+
+###### Get into Learning mode peeps!
+
+Writing a Java console + REST API app that:
+
+1. Takes user input about product purchases,
+2. Tracks those purchases,
+3. Calculates total profit and displays customer info,
+4. Exposes API endpoints using Javalin (a lightweight Java web framework)
+
+> **Note:** Database is not connected, hence no persistent data.
+
+---
+
+###### Setting up the Maven Project
+
+Create a Maven project with the commands below:
+
+# Create project directory
+mkdir -p restApiServer  
+cd restApiServer
+
+# Initialize Maven project (quickstart archetype)
+mvn archetype:generate -DgroupId=com.test -DartifactId=java-project -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false 
+
+# Open project in your favorite editor (VScodium in my case)
+codium .
+
+###### You have two classes under com.test:
+
+###### 1. RestApp – the main application that manages input, purchase logic, and starts the API.
+
+package com.test;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import io.javalin.Javalin;
+
+public class RestApp {
+
+    // Global variables
+    DataModel construct = new DataModel("Arul", 24, "India, TN");
+    int productIndex = 0;
+    Map<String, Double> purchasedProductDetails = new HashMap<>();
+    Scanner scanner = new Scanner(System.in);
+
+    public void recordPurchase(String product, double price) {
+        productIndex++;
+        construct.setProductName(product);
+        construct.setProductPrice(price);
+        construct.setTotalProductsPurchased(productIndex);
+        makeList();
+    }
+
+    public void printAndRead() {
+        System.out.println("[+] Enter the Product " + productIndex + " Name:");
+        String productName = scanner.nextLine();
+        System.out.println("[+] Enter price of the Product");
+        Double productPrice = scanner.nextDouble();
+        scanner.nextLine();  // consume newline
+        recordPurchase(productName, productPrice);
+    }
+
+    public void makeList() {
+        purchasedProductDetails.put(construct.getProductName(), construct.getProductPrice());
+    }
+
+    public void calculateTotalProfit() {
+        double sum = 0;
+        for (double price : purchasedProductDetails.values()) {
+            sum += price;
+        }
+        System.out.println("Total profit: ₹" + sum);
+    }
+
+    public void startApi() {
+        Javalin app = Javalin.create(config -> {
+            // Any config if needed, e.g. enable CORS or static files here
+        }).start(7070);
+
+        // Set default response content type to JSON
+        app.before(ctx -> ctx.contentType("application/json"));
+
+        // POST /purchase - add new purchase
+        app.post("/purchase", ctx -> {
+            Map<String, Object> data = ctx.bodyAsClass(Map.class);
+            String product = data.get("product").toString();
+            double price = Double.parseDouble(data.get("price").toString());
+            recordPurchase(product, price);
+            ctx.status(200).result("Recorded: " + product + " for ₹" + price);
+        });
+
+        // GET /total - get total profit and customer details
+        app.get("/total", ctx -> {
+            double sum = purchasedProductDetails.values().stream().mapToDouble(Double::doubleValue).sum();
+            ctx.json(Map.of(
+                "totalProfit", sum,
+                "customerName", construct.name,
+                "customerAge", construct.age,
+                "customerRegion", construct.region
+            ));
+        });
+    }
+
+    public static void main(String[] args) {
+        RestApp app = new RestApp();
+        app.startApi();
+
+        // Optional: Console CLI interface
+        int flag = 0;
+        while (flag != 1) {
+            System.out.println("Proceed Adding Products? (Y/N)");
+            String userInput = app.scanner.nextLine();
+            if (userInput.equalsIgnoreCase("Y")) {
+                app.printAndRead();
+            } else {
+                app.calculateTotalProfit();
+                flag = 1;
+                app.scanner.close();
+            }
+        }
+    }
+}
+
+---
+
+###### Breakdown of the Code
+
+###### 1. **Class-level variables**
+
+DataModel construct = new DataModel("Arul", 24, "India, TN");
+int productIndex = 0;
+Map<String, Double> purchasedProductDetails = new HashMap<>();
+Scanner scanner = new Scanner(System.in):
+
+* `construct`: An instance of the `DataModel` class (previously `Constructor`) representing a customer named "Arul", age 24, from "India, TN".
+* `productIndex`: Keeps track of the number of products purchased.
+* `purchasedProductDetails`: A `HashMap` storing purchased product names as keys and their prices as values.
+* `scanner`: Scanner object to read user input from the console.
+
+---
+
+###### 2. **Method: `recordPurchase`**
+
+public void recordPurchase(String product, double price) {
+    productIndex++;
+    construct.setProductName(product);
+    construct.setProductPrice(price);
+    construct.setTotalProductsPurchased(productIndex);
+    makeList();
+}
+
+* Called to record a product purchase.
+* Increments the total product count (`productIndex`).
+* Updates the `construct` object with the current product name, price, and total products purchased.
+* Calls `makeList()` to add the product details to the map.
+
+---
+
+###### 3. **Method: `printAndRead`**
+
+public void printAndRead() {
+    System.out.println("[+] Enter the Product " + productIndex + " Name:");
+    String productName = scanner.nextLine();
+    System.out.println("[+] Enter price of the Product");
+    Double productPrice = scanner.nextDouble();
+    scanner.nextLine();  // consume newline
+    recordPurchase(productName, productPrice);
+}
+
+* Prompts the user in the console to enter a product name and price.
+* Reads user input using `Scanner`.
+* Calls `recordPurchase` to save the data.
+
+---
+
+###### 4. **Method: `makeList`**
+
+public void makeList() {
+    purchasedProductDetails.put(construct.getProductName(), construct.getProductPrice());
+}
+
+* Adds the current product name and price from `construct` to the `purchasedProductDetails` map.
+* This keeps a persistent list of all purchases.
+
+---
+
+###### 5. **Method: `calculateTotalProfit`**
+
+public void calculateTotalProfit() {
+    double sum = 0;
+    for (double price : purchasedProductDetails.values()) {
+        sum += price;
+    }
+    System.out.println("Total profit: ₹" + sum);
+}
+
+* Sums all product prices from the map.
+* Prints the total profit (sum of all product prices) in Indian Rupees (₹).
+
+---
+
+###### 6. **Method: `startApi`**
+
+public void startApi() {
+    Javalin app = Javalin.create(config -> {
+        // Any config if needed, e.g. enable CORS or static files here
+    }).start(7070);
+
+    // Set default response content type to JSON
+    app.before(ctx -> ctx.contentType("application/json"));
+
+    // POST /purchase - add new purchase
+    app.post("/purchase", ctx -> {
+        Map<String, Object> data = ctx.bodyAsClass(Map.class);
+        String product = data.get("product").toString();
+        double price = Double.parseDouble(data.get("price").toString());
+        recordPurchase(product, price);
+        ctx.status(200).result("Recorded: " + product + " for ₹" + price);
+    });
+
+    // GET /total - get total profit and customer details
+    app.get("/total", ctx -> {
+        double sum = purchasedProductDetails.values().stream().mapToDouble(Double::doubleValue).sum();
+        ctx.json(Map.of(
+            "totalProfit", sum,
+            "customerName", construct.name,
+            "customerAge", construct.age,
+            "customerRegion", construct.region
+        ));
+    });
+}
+
+* Sets up and starts a Javalin web server on port 7070.
+* Sets default content type for all responses to `application/json`.
+* Defines two endpoints:
+
+  * `POST /purchase`
+    Accepts JSON data with `product` (String) and `price` (Double). It records the purchase by calling `recordPurchase`. Responds with a confirmation message.
+  * `GET /total`
+    Returns a JSON object including:
+
+    * `totalProfit`: Sum of all product prices.
+    * `customerName`, `customerAge`, `customerRegion`: Customer details from `construct`.
+
+---
+
+###### 7. **Main method**
+
+public static void main(String[] args) {
+    RestApp app = new RestApp();
+    app.startApi();
+
+    // Optional: Console CLI interface
+    int flag = 0;
+    while (flag != 1) {
+        System.out.println("Proceed Adding Products? (Y/N)");
+        String userInput = app.scanner.nextLine();
+        if (userInput.equalsIgnoreCase("Y")) {
+            app.printAndRead();
+        } else {
+            app.calculateTotalProfit();
+            flag = 1;
+            app.scanner.close();
+        }
+    }
+}
+
+* Instantiates the `RestApp`.
+* Starts the Javalin REST API server.
+* Then, enters a CLI loop asking the user if they want to add products manually.
+* If user inputs "Y", prompts for product and price.
+* If user inputs anything else, prints total profit and exits the CLI loop by closing the scanner.
+
+The CLI interface was just a template that was used to extend restAPI functionality It was left as it is for beginners to understand code from simple perspective. Feel free to skip it. if you wish.
+
+The below code that has only rest API feature alone:
+
+package com.test;
+
+import java.util.Map;
+import java.util.HashMap;
+
+import io.javalin.Javalin;
+
+public class App {
+
+    // Global variables
+    DataModel construct = new DataModel("Arul", 24, "India, TN");
+    int productIndex = 0;
+    Map<String, Double> purchasedProductDetails = new HashMap<>();
+
+    public void recordPurchase(String product, double price) {
+        productIndex++;
+        construct.setProductName(product);
+        construct.setProductPrice(price);
+        construct.setTotalProductsPurchased(productIndex);
+        makeList();
+    }
+
+    public void makeList() {
+        purchasedProductDetails.put(construct.getProductName(), construct.getProductPrice());
+    }
+
+    public void startApi() {
+        Javalin app = Javalin.create(config -> {
+            // Any config if needed, e.g. enable CORS or static files here
+        }).start(7070);
+
+        // Set default response content type to JSON
+        app.before(ctx -> ctx.contentType("application/json"));
+
+        // POST /purchase - add new purchase
+        app.post("/purchase", ctx -> {
+            Map<String, Object> data = ctx.bodyAsClass(Map.class);
+            String product = data.get("product").toString();
+            double price = Double.parseDouble(data.get("price").toString());
+            recordPurchase(product, price);
+            ctx.status(200).result("Recorded: " + product + " for ₹" + price);
+        });
+
+        // GET /total - get total profit and customer details
+    app.get("/total", ctx -> {
+        double sum = purchasedProductDetails.values().stream().mapToDouble(Double::doubleValue).sum();
+        ctx.json(Map.of(
+            "totalProfit", sum,
+            "customerName", construct.name,
+            "customerAge", construct.age,
+            "customerRegion", construct.region
+        ));
+    });        
+
+    public static void main(String[] args) {
+        App app = new App();
+        app.startApi();
+    }
+}
+
+---
+
+###### 2. datamodel – a model class holding user and product-related data. 
+
+(Just a constructor with getters and setters for secure coding practice)
+
+package com.test;
+
+public class DataModel {
+
+    String name;
+    int age;
+    String region;
+
+    private String purchaseProduct;
+    private double productPrice;
+    private double profitOfTheDay;
+    private int totalProductsPurchased;
+     
+    public DataModel(String name, int age, String region) {
+        this.age = age;
+        this.name = name;
+        this.region = region;
+    }
+
+    public String getProductName() {
+        return purchaseProduct;
+    }
+
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    public double getProfitOfTheDay() {
+        return profitOfTheDay;
+    }
+
+    public void setProductName(String purchaseProduct) {
+        this.purchaseProduct = purchaseProduct;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProfitOfTheDay(double profitOfTheDay) {
+        this.profitOfTheDay = profitOfTheDay;
+    }
+
+    public void setTotalProductsPurchased(int totalProductsPurchased) {
+        this.totalProductsPurchased = totalProductsPurchased;
+    }
+
+    public int getTotalProductsPurchased() {
+        return totalProductsPurchased;
+    }
+}
+
+###### pom.xml
+
+Below are the dependenceis from maven repository:
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.test</groupId>
+  <artifactId>java-project</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>java-project</name>
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.javalin</groupId>
+      <artifactId>javalin</artifactId>
+      <version>5.6.3</version>
+    </dependency>
+    
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.0</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
+#Run below Maven commands
+
+mvn clean compile
+mvn clean package
+mvn compile exec:java -Dexec.mainClass=com.test.App
+
+###### OUTPUT:
+
+###### CLI App:
+
+Proceed Adding Products? (Y/N)
+Y
+[+] Enter the Product 0 Name:
+Apple
+[+] Enter price of the Product
+100
+Proceed Adding Products? (Y/N)
+Y
+[+] Enter the Product 1 Name:
+Banana
+[+] Enter price of the Product
+50
+Proceed Adding Products? (Y/N)
+N
+Total profit: ₹150.0
+
+###### Rest API:
+
+#Hitting at /purchase endpoint with curl via post call 
+
+#Run below comand in your terminal, you can also use postman if  you like to use GUI.
+
+curl -X POST http://localhost:7070/purchase \
+  -H "Content-Type: application/json" \
+  -d '{"product": "Apple", "price": 100}' \
+  -w "\nHTTP Status: %{http_code}\n"
+
+#Expected Response:
+
+Recorded: Apple for ₹100.0
+HTTP Status: 200
+
+#Hitting at /purchase endpoint with curl via Get call 
+
+curl -w "\nHTTP Status: %{http_code}\n" http://localhost:7070/total
+
+#Expected Response:
+
+{
+  "totalProfit": 100.0,
+  "customerName": "Arul",
+  "customerAge": 24,
+  "customerRegion": "India, TN"
+}
+
+Hope it gave some knowledge about how Api's work, see you with part 2 next time.
+
+---

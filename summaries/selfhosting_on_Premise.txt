@@ -1,0 +1,37 @@
+##### Internet Privacy and Free Speech - God Mode Initiated 
+
+If you are Here After Reading My [Recent Blog](https://arulbalaji.xyz/journal/telegram_blame/) . Then you are going to be Enlightened here with some serious Tech Skills and Revolutionary Mind with hunger for Privacy. You won't be a Herd Mentality Zombie. 
+
+##### **Before:** Selfhosting Outside-Premise (Cloud)
+
+It all started from a broken useless phone. where I learnt about creating my server and publishing my content on Internet. [ [Broken Phone Server](https://arulbalaji.xyz/journal/broken_phone_server/) ]
+
+Then I have played around with **Selfhosting outside-Premise** Concept. Well normally people used to host Website their own web apps using a Public VPS, Azure cloud or AWS.
+
+I would rather trust a VPS provider then Azure or AWS. but my mind can't able to find the peace with this setup.
+
+The Traditional hosting in Cloud. My Mind fell into the Rabbit hole again hungry for searching Freedom and Privacy. Peace of Mind.
+
+Because I have realized its still some company's hardware where I host my services. and OS can't be modified since whatever they provide is default atleast for cheaper plans.
+
+Technically Even VPS provider can still erase my contents or even close my VPS. In Digital Privacy, **The only Trust worthy person is you** 
+
+Considering my Budget and Privacy I have got my hands dirty with **Selfhosting on-Premise**
+
+##### **Now:** Selfhosting On-Premise (Home Server)
+
+The Site you read now and all my personal webapps services.Lets say Feeds, Chat Server, Personal Site and much more. Runs in an old Laptop.There are many ways to make these services Publised on Internet from Local network.But Indian Home Routers are always restricted because it doesn't offer Public IP, it's always behind NAT or even worse CG-NAT. 
+
+so I have been left with an one and only non traditional option, I have Tunneled my whole Home server services to Public VPS via ssh to make my services available on Internet and it could be accessed by anyone. I have built a systemd script to spawn all process automatically at boot.
+
+This provides Additional Layer of security and Privacy. VPS provider may read my service's content via memory or swap. They don't have power to modify or Erase the content but still they wont be able to spy my E2E Encrypted chat services. Another advatnage, I can easily switch to Another VPS. If I have to without overhead of Migrating my contents and service to another VPS.
+
+Since My Chat Services and other services are Encrypted...with End-to-End Encryption no one can able to see it, well listing from Govt, Corporates, Even my own VPS provider Since Decryption is not really happening in my Public VPS rather it happens in my Home Server. so they can't read anything out of swap memory from VPS.
+
+Additionally Disk Encryption in VPS act as a huge measure for protecting your Privacy. Ultimately Acheiving God mode in Selfhosting Expertise.
+
+Don't even bother to use Cloudflare Tunnel if you value your privacy.
+
+Well I can't Explain why privacy Matters in just few words, It's a Big Book. If Interested, Please check the video below to save your valuable Time:
+
+Peace :)

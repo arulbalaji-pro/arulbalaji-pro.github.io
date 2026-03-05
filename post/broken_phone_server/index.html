@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️ | Arul Balaji</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.131.0">
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:url" content="https://arulbalaji-pro.github.io/post/broken_phone_server/">
+  <meta property="og:site_name" content="Arul Balaji">
+  <meta property="og:title" content="Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️">
+  <meta property="og:description" content="I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren’t trash and can be used in other ways. 🧑🏻‍💻 #1 Making an ssh and sftp file transfer server I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can’t offer a root environment unless you root your Android.
+I won’t recommend rooting either it may brick your phone or make it more vulnerable.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2023-10-11T00:00:00+05:30">
+    <meta property="article:modified_time" content="2023-10-11T00:00:00+05:30">
+
+  <meta itemprop="name" content="Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️">
+  <meta itemprop="description" content="I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren’t trash and can be used in other ways. 🧑🏻‍💻 #1 Making an ssh and sftp file transfer server I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can’t offer a root environment unless you root your Android.
+I won’t recommend rooting either it may brick your phone or make it more vulnerable.">
+  <meta itemprop="datePublished" content="2023-10-11T00:00:00+05:30">
+  <meta itemprop="dateModified" content="2023-10-11T00:00:00+05:30">
+  <meta itemprop="wordCount" content="190">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️">
+  <meta name="twitter:description" content="I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren’t trash and can be used in other ways. 🧑🏻‍💻 #1 Making an ssh and sftp file transfer server I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can’t offer a root environment unless you root your Android.
+I won’t recommend rooting either it may brick your phone or make it more vulnerable.">
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://arulbalaji-pro.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Arul Balaji
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+      <h1 class="f1 athelas mt3 mb1">Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2023-10-11T00:00:00&#43;05:30">October 11, 2023</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h6 id="i-have-repurposed-a-broken-phone-into-a-hybrid-server-cuz-i-believe-old-broken-electronics-arent-trash-and-can-be-used-in-other-ways-">I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren&rsquo;t trash and can be used in other ways. 🧑🏻‍💻</h6>
+
+
+
+<h5 id="1-making-an-ssh-and-sftp-file-transfer-server">#1 Making an ssh and sftp file transfer server</h5>
+
+
+
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="video-container">
+  <iframe 
+    title="Repurposing broken android" 
+    src="https://videos.arulbalaji.xyz/videos/embed/heHjers3aT7XrzXt6X9A9m" 
+    frameborder="0" 
+    allowfullscreen 
+    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  </iframe>
+</div>
+
+
+
+
+
+<p>I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can&rsquo;t offer a root environment unless you root your Android.</p>
+<p>I won&rsquo;t recommend rooting either it may brick your phone or make it more vulnerable.</p>
+<p>I have tunneled the server to serveo.net to make the server available in public all over the world</p>
+
+
+
+<h5 id="2-android-apache-web-server">#2 Android Apache Web Server</h5>
+
+
+
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="video-container">
+  <iframe 
+    title="android webserver experimental" 
+    src="https://videos.arulbalaji.xyz/videos/embed/f9oLE5ucN8u2tHinwbhoT2" 
+    frameborder="0" 
+    allowfullscreen 
+    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  </iframe>
+</div>
+
+
+
+
+
+<p>Hosted an Experimental site in it by using apache2.</p>
+
+
+
+<h5 id="3-auto-recovery-after-powercut">#3 Auto Recovery After Powercut</h5>
+
+
+
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="video-container">
+  <iframe 
+    title="Powercut Recovery" 
+    src="https://videos.arulbalaji.xyz/videos/embed/x9pbovzCRS4aLZL5AcE26h" 
+    frameborder="0" 
+    allowfullscreen 
+    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  </iframe>
+</div>
+
+
+
+
+
+<p>Desigined series of bash script interconnect to each other to start the ssh and other servers after powercut and do reverse port forwarding automatically via serveo.netto expose it to public without manual intervention.</p>
+<h5 id="4-android-music-server">#4 Android Music Server</h5>
+
+
+
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="video-container">
+  <iframe 
+    title="android music server" 
+    src="https://videos.arulbalaji.xyz/videos/embed/cFKN3dSAHqZuutkAN1uEUw" 
+    frameborder="0" 
+    allowfullscreen 
+    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  </iframe>
+</div>
+
+
+
+
+
+<p>Built a personal music server similar to spotify by Leveraging over Navidrome project and making the server public using methods explained above.</p>
+<h5 id="5-dead-but-alive">#5 Dead but Alive</h5>
+
+
+
+<style>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="video-container">
+  <iframe 
+    title="dead but alive" 
+    src="https://videos.arulbalaji.xyz/videos/embed/vr73WMaMuW3Q4CoisUJhVB" 
+    frameborder="0" 
+    allowfullscreen 
+    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  </iframe>
+</div>
+
+
+
+
+
+<p>Dead or Alive, I am the Hero 🤣.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://arulbalaji-pro.github.io/" >
+    &copy;  Arul Balaji 2026 
+  </a>
+    <div>
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

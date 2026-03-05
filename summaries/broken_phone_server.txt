@@ -1,0 +1,27 @@
+###### I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren't trash and can be used in other ways. 🧑🏻‍💻
+
+##### #1 Making an ssh and sftp file transfer server 
+
+I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can't offer a root environment unless you root your Android. 
+
+I won't recommend rooting either it may brick your phone or make it more vulnerable.
+
+I have tunneled the server to serveo.net to make the server available in public all over the world
+
+##### #2 Android Apache Web Server
+
+Hosted an Experimental site in it by using apache2.
+
+##### #3 Auto Recovery After Powercut
+
+Desigined series of bash script interconnect to each other to start the ssh and other servers after powercut and do reverse port forwarding automatically via serveo.netto expose it to public without manual intervention.
+
+##### #4 Android Music Server 
+
+    
+
+Built a personal music server similar to spotify by Leveraging over Navidrome project and making the server public using methods explained above.
+
+##### #5 Dead but Alive
+
+Dead or Alive, I am the Hero 🤣.

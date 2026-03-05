@@ -1,0 +1,145 @@
+---
+
+**1. Verify Current Branch and Checkout**  
+Since we were working on branch `v2.0` in our previous tutorial [Git Tutorial Part 1](https://arulbalaji.xyz/journal/git-tutorial-part1/), let's verify that it's still the current branch.
+
+Note: Imagine you're another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch `v2.1`, instead of using the branch (`v2.0`), to keep your work in seperate branch.  
+Later on, these code changes will be merged into the main branch by our lead or manager.
+  
+  
+
+We can change the current branch to `v2.1` for this tutorial.
+
+# verify the current staging branch
+
+git branch
+
+#checkout to desired branch
+
+git checkout -b <"provide your desired branch name">
+
+#verify if the branch is switched to your desired branch name (In my case switching branch from v2.0 to my desired branch v2.1)
+
+git branch
+
+**2. Modify the File**  
+I'll edit README.md using Vim editor in my terminal (or Notepad/your favorite text editor if you're on Windows). Person X has documented a cron expression to initiate the backup server script, which is just one file that needs to be pushed to branch `v2.1`.
+
+To stage this change:  
+*   Add files for staging.  
+*   Commit changes with a useful message.  
+*   Push code changes to your desired branch.
+
+    
+  
+  
+
+now person X have documented the cron expression to initiate the back-up server script. (Just a file that was modified and will be pushed in v2.1, like we did in previous article with v2.0)
+  
+  
+
+on above screen. Person X have added only README.md for staging in v2.1.
+
+#below command adds one or more then one file for staging
+
+# adding single file for staging
+
+git add <"Provide Modified File">
+
+#adding multiple files for staging
+
+git add <"file1"> <"file2">
+
+# commit the changes with useful hint or message.
+
+git commit -m <"Provide a hint or a message that describes about your code or file change">
+
+# push your code change to your desired branch
+
+git push -u origin <"Provide your desired branch name">
+
+  
+  
+
+Note: Incase if your git account username is not being accepted. provide your git registered email id instead.  
+Since branch `v2.1` doesn't exist yet, Git will create it automatically.
+
+**3. Check the GitHub or WebUI**  
+You'll see a notification on top of the web UI saying "You pushed on branch v2.1 2 minutes ago." This indicates that our code push was successful!
+  
+  
+
+Switch to branch `v2.0` and then back to `v2.1`. You should be able to see README.md with its latest modifications, along with a timestamp.
+  
+  
+
+As you can see README.md file is being pushed with latest modification and the timestamp is displayed as "2 minutes ago"
+ 
+  
+
+we can also able to see that the README.md in git repo. displays our cron job related documentation successfully.
+ 
+  
+
+Now click the New Pull request button on this notification. It will take you to the New Pull request section where you can examine the pushed files in more detail.
+  
+  
+
+now go to main branch. as you can see none of the code change that was being pushed on v2.0 and v2.1 is reflected here.
+
+  
+
+Now consider, the real life scenario your Lead or manager will review the code change in both v2.0 and v2.1 then they will merge it with the main branch if they want to.
+  
+  
+
+In web. The Main branch is still holding the old code. we have to merge those changes from v2.0 and v2.1 into main branch.
+
+**4. Merge Different Branches into Main Branch**  
+Let's merge code changes from both `v2.0` and `v2.1` into our main branch. Again verify the current branch. and checkout the branch to main branch.  
+After checking out to the main branch, we'll:  
+*   Merge it with the first branch (`v2.0`) using `git merge <branch_name>`.  
+*   Then merge it with the second branch (`v2.1`) using another `git merge <branch_name>` command.  
+*   Alternatively, use one of these commands to merge both branches into main.
+  
+  
+
+  
+
+#after checkout to main branch, merge main branch with the first branch (in my case its v2.0)
+
+git merge <"provide the desired first branch">
+
+# merge main branch with the second branch (in my case its v2.1)
+
+git merge <"provide the desired second branch">
+
+  
+
+#use any of the command below to merge the both v2.0 and v2.1 into main branch
+
+git push origin main
+
+#or 
+
+git push -u origin main
+
+**5. Verify Main Branch Merge in GitHub or WebUI**  
+Now we will verify the code push in Github or WebUI.
+  
+  
+
+Timestamps from all merged files should align with those on `v2.0` and `v2.1`.
+
+  
+
+README.md's cron expression documentation will be displayed in the main branch project repo, proving that we successfully merged changes from both branches.
+ 
+    
+  
+  
+
+Now click the New Pull request button again. You'll see "The Branches are equal. The PR will be empty," which indicates all branches have been merged with the main branch.  
+Peace!
+
+---

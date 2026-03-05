@@ -1,0 +1,40 @@
+##### Why I am Self Hosting my own platforms?
+
+###### Since I decided to come out of Matrix, It pulled me into this rabbit hole.
+
+###### 1. At First it's just my personal Website.
+
+##### 2. Next, My own matrix Chat Server
+
+This is my matrix private chat room.
+
+I have realized. I don't need any softwares that were offered by big tech companies because all the data they collect could be used against us with in
+split second.
+
+so i have decided to leverage free and opensource softwares and services to host my own platforms.
+
+##### 3. Media server
+
+A Jellyfin Media server where i can access my movie collections, with same experience as OTT platforms.
+
+##### 4. Peertub Instance (P2P video upload and stream platform)
+
+This is my own video platform. this p2p instance is hosted by me. the videos can't be taken down. cuz i host it. 
+
+Selfhosting your own services. Gives back power to you. you are not with in the matrix anymore.
+
+you are not relying on a company to show mercy on you, you dont have to be worried for your content being deleted. You don't have to be bound to world's rule and change your content based on likes and comments
+
+###### CUZ YOU ARE AT THE PLACE, WHERE YOU CREATE TRENDS RATHER THAN GOING ALONG WITH THE ONE.
+
+##### 5. Wrapper script that leverages rsync to backup data (like Google Drive)
+
+Just a simple wrapper script to iterate through all my directories and do back up for all my data.
+
+##### 6. Mail Server
+
+Last but not least my own Mail server. It works fine :)
+
+###### YOU ARE BEING CAGED AND MANIPULATED. BREAK OUT OF IT.
+
+All this service are not feature rich and perfect, but it works for you and not for top 1% who play God.

@@ -1,0 +1,23 @@
+##### Breaking Free from YouTube's Manipulation
+
+As someone who values autonomy and critical thinking, I've always been frustrated by YouTube's manipulative UI and toxic content. The endless loop of recommended videos can be distracting and addictive, making it easy to get lost in the middle.
+
+But what really got my attention was the proliferation of toxic media and movies with twisted ideas that become famous despite their harm. And then there are comment section scams that support such videos while pretending to be noble. I believe that good and bad is only differentiated by a thin line, which can easily be blurred by manipulative content.
+
+That's why I decided to take matters into my own hands and create two simple YouTube video tools: PlainV (plainv) and BypassV (bypassv).
+
+###### PlainV: A Simple Video Player
+
+With PlainV, users can input their favorite YouTube links collected from RSS feeds of their preferred content creators. This way, they can play videos without getting caught up in the endless loop of recommendations.
+
+However, there was one major hurdle: some videos were blocked on YouTube, only allowing them to be played within the platform. That's when I used streaming features with ffmpeg piped with ytdlp to bypass these restrictions.
+
+###### BypassV: A Web App for Bypassing YouTube Restrictions
+
+With BypassV, users can input any YouTube link and stream it directly into a web player by streaming a youtube link irrespective of restrictions using ffmpeg and ytdlp then converting them into web-based codecs to play it on website (bypassV). No more getting caught up in YouTube's manipulative UI or toxic content!
+
+Now we are free to watch whatever content we want without being manipulated by YouTube. Join me on this journey to reclaim our autonomy and critical thinking, for more updates subscribe my site via RSS.
+
+###### Project Repo Link:
+
+[Mono_Youtube_Viewer](https://gitea.arulbalaji.xyz/arul/Mono_Youtube_Viewer.git)

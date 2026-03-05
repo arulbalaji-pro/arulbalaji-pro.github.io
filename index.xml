@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Automation Tester and Cybersecurity Enthusiast on Arul Balaji</title>
+    <link>https://arulbalaji-pro.github.io/</link>
+    <description>Recent content in Automation Tester and Cybersecurity Enthusiast on Arul Balaji</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0530</lastBuildDate>
+    <atom:link href="https://arulbalaji-pro.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning About Secure Coding Practices &amp; Exploitation Like a Hacker 🧨🕵️‍♂️💻 </title>
+      <link>https://arulbalaji-pro.github.io/post/learning_webapp_exploitation/</link>
+      <pubDate>Sat, 02 Aug 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/learning_webapp_exploitation/</guid>
+      <description>Hi peeps! It&amp;rsquo;s been a while since my last post. Another weekend, another round of learning—as usual. I’ve been exploring secure coding practices, and decided to play the villain by trying to exploit our dummy web app.&#xA;It’s a fun journey as always—documenting my learning so I (and maybe you) can come back to these little knowledge sprinkles in the future. Before we start Exploitation, Please clone the webapp project from my Git repo:</description>
+    </item>
+    <item>
+      <title>Connecting Java API Backend with a Simple Web Frontend [Part-3]</title>
+      <link>https://arulbalaji-pro.github.io/post/java_restapi_server-part3/</link>
+      <pubDate>Tue, 24 Jun 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/java_restapi_server-part3/</guid>
+      <description>Show Total: &amp;times; Purchasing product: &amp;times; Final Total: &amp;times; We’ve created a clean and functional REST API backend using Java + Javalin, paired with a vanilla HTML + JS frontend — no frameworks, no fuss.&#xA;This post walks through how the two sides talk to each other and explains critical bits like CORS, fetch(), and arrow functions (=&amp;gt;). Simple, clean, and beginner-friendly.&#xA;🔌 Project Overview java-project/ ├── App.java ← REST API (Javalin) ├── Constructor.</description>
+    </item>
+    <item>
+      <title>Extending Our Java REST API: Now with SQLite for Persistent Storage [Part-2]</title>
+      <link>https://arulbalaji-pro.github.io/post/java_restapi_server-part2/</link>
+      <pubDate>Sun, 22 Jun 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/java_restapi_server-part2/</guid>
+      <description>&amp;times; In Part 1, we built a simple backend API using Java + Javalin, allowing product purchases to be added and tracked. But there was one major limitation:&#xA;Data was not persistent. All records vanished after a restart.&#xA;This time, we&amp;rsquo;re fixing that. 🔥&#xA;Welcome to Part 2, where we add SQLite as our lightweight database engine, and track purchases in a real .db file locally.&#xA;This project still follows the same learning-first mindset:</description>
+    </item>
+    <item>
+      <title>️Building Rest Api Server from scratch using Java and Javalin [Part-1]</title>
+      <link>https://arulbalaji-pro.github.io/post/java_restapi_server/</link>
+      <pubDate>Sun, 25 May 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/java_restapi_server/</guid>
+      <description>#pro-site description: minimal java Rest API tutorial from scratch for beginners.&#xA;&amp;times; Lately, I&amp;rsquo;ve been diving into API automation. It started with writing simple scripts to test endpoints, then turned into exploring how backend systems actually work. One day, I thought — why not try building my own API from scratch?&#xA;I didn&amp;rsquo;t want to build something overly complex. I just wanted something that felt like a &amp;ldquo;real&amp;rdquo; backend but also let me play with the basics like handling requests, reading data, updating internal state, and returning some JSON.</description>
+    </item>
+    <item>
+      <title>Access your Home Lab via Browser - Guacamole Setup Guide [Part 1] 🌐 🖥️</title>
+      <link>https://arulbalaji-pro.github.io/post/guacamole-setup-part1/</link>
+      <pubDate>Sun, 20 Apr 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/guacamole-setup-part1/</guid>
+      <description>🚀 Self-Hosting Apache Guacamole with Docker Apache Guacamole is a clientless remote desktop gateway that supports standard protocols like VNC, RDP, and SSH and it requires zero setup. All you need is a browser from a stranger&amp;rsquo;s PC to access your full home network, computers, homeservers.&#xA;Let&amp;rsquo;s set it up using Docker!&#xA;Step 1: Pull Required Docker Images&#xA;Let’s get the Guacamole components and the database image from Docker Hub:</description>
+    </item>
+    <item>
+      <title>Git Tutorial [Part 2] - Merging the branches to Main Repo</title>
+      <link>https://arulbalaji-pro.github.io/post/git-tutorial-part2/</link>
+      <pubDate>Sat, 05 Apr 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/git-tutorial-part2/</guid>
+      <description>1. Verify Current Branch and Checkout&#xA;Since we were working on branch v2.0 in our previous tutorial Git Tutorial Part 1, let&amp;rsquo;s verify that it&amp;rsquo;s still the current branch.&#xA;Note: Imagine you&amp;rsquo;re another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch v2.1, instead of using the branch (v2.0), to keep your work in seperate branch.&#xA;Later on, these code changes will be merged into the main branch by our lead or manager.</description>
+    </item>
+    <item>
+      <title>Git Tutorial [Part 1] - cloning, add branch, staging, pushing</title>
+      <link>https://arulbalaji-pro.github.io/post/git-tutorial-part1/</link>
+      <pubDate>Fri, 04 Apr 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/git-tutorial-part1/</guid>
+      <description>1. Cloning a Repository&#xA;This step downloads a Git project into your local machine where you can modify the code and push it back to the repository on either the same branch or create a new one.&#xA;&amp;times; git clone &amp;lt;&amp;#34;git repo url&amp;#34;&amp;gt; In this article, we&amp;rsquo;ll focus on pushing changes to different branches, representing various versions of the code. These version updates will eventually be merged with the main branch repository.</description>
+    </item>
+    <item>
+      <title>Cyber deck Upgrade - carved wood as hood ✨ 🛠️ 💻</title>
+      <link>https://arulbalaji-pro.github.io/post/cyberdeck_upgrade-1/</link>
+      <pubDate>Mon, 10 Mar 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/cyberdeck_upgrade-1/</guid>
+      <description>Upgrading My Cyberdeck: Adding Style and Protection&#xA;Before:&#xA;&amp;times; After:&#xA;&amp;times; I just gave my trusty cyberdeck (a Linux-powered machine for private data protection) a stylish makeover. I carved some wood to create a custom hood that not only looks great but also provides better protection for the electronics beneath.&#xA;The old plastic sheet was barely covering the wires, making it look like a DIY project gone wrong. But now, with this wooden hood in place, my cyberdeck is looking sleek and secure!</description>
+    </item>
+    <item>
+      <title>Tor Router - A way out of Mass manipulation and control 🖧   🌐</title>
+      <link>https://arulbalaji-pro.github.io/post/tor-router/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/tor-router/</guid>
+      <description>Why Everyone Must Build or have a Tor Router in thier home &amp;times; &amp;times; &amp;times; Building your own Tor router is a crucial step in protecting your online privacy and security. When you route your internet traffic through the Tor network, your IP address is hidden, making it much harder for advertisers, governments, or hackers to track your activity. This extra layer of anonymity shields you from surveillance and data profiling, giving you more control over your digital presence.</description>
+    </item>
+    <item>
+      <title>Cyberdeck build prototype - 2025 💻🌐 📺📡 👾 </title>
+      <link>https://arulbalaji-pro.github.io/post/cyberdeck-build-prototype-2025/</link>
+      <pubDate>Sun, 19 Jan 2025 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/cyberdeck-build-prototype-2025/</guid>
+      <description>New Year, New Project: Introducing My Cyberdeck&#xA;Happy New Year, everyone! As we kick off 2025, I’m excited to share with you my latest project: the Cyberdeck.&#xA;&amp;times; &amp;times; &amp;times; What is a Cyberdeck? A Cyberdeck is a portable, modular personal computer designed for a very specific set of needs and goals. Unlike traditional laptops or mobile devices, which come with fixed configurations, a Cyberdeck offers flexibility and customization like no other.</description>
+    </item>
+    <item>
+      <title>Bypassing youtube restrictions, watch videos without going to Youtube 🏴‍☠️🦜 🧭</title>
+      <link>https://arulbalaji-pro.github.io/post/youtube-restriction-bypass/</link>
+      <pubDate>Thu, 10 Oct 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/youtube-restriction-bypass/</guid>
+      <description>Breaking Free from YouTube&amp;rsquo;s Manipulation As someone who values autonomy and critical thinking, I&amp;rsquo;ve always been frustrated by YouTube&amp;rsquo;s manipulative UI and toxic content. The endless loop of recommended videos can be distracting and addictive, making it easy to get lost in the middle.&#xA;But what really got my attention was the proliferation of toxic media and movies with twisted ideas that become famous despite their harm. And then there are comment section scams that support such videos while pretending to be noble.</description>
+    </item>
+    <item>
+      <title>Self Hosting on-Premise, If your are concerned of your Freedom 🧑🏾‍💻</title>
+      <link>https://arulbalaji-pro.github.io/post/selfhosting_on_premise/</link>
+      <pubDate>Sun, 01 Sep 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/selfhosting_on_premise/</guid>
+      <description>Internet Privacy and Free Speech - God Mode Initiated If you are Here After Reading My Recent Blog . Then you are going to be Enlightened here with some serious Tech Skills and Revolutionary Mind with hunger for Privacy. You won&amp;rsquo;t be a Herd Mentality Zombie.&#xA;Before: Selfhosting Outside-Premise (Cloud) It all started from a broken useless phone. where I learnt about creating my server and publishing my content on Internet.</description>
+    </item>
+    <item>
+      <title>Selfhosting Issues: It&#39;s not worth it to Self Host Mailserver 📧 📬</title>
+      <link>https://arulbalaji-pro.github.io/post/selfhosted_mail_server_issues/</link>
+      <pubDate>Fri, 09 Aug 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/selfhosted_mail_server_issues/</guid>
+      <description>Big Tech Politics on Mail Server I have worked on creating a Mail server for couple of days and setup DNS Records for Mail.&#xA;My mail server hit 9/10 score in MailTester website. but my DKIM records and Reverse DNS Doesn&amp;rsquo;t Look good.Unfortunately I haven&amp;rsquo;t got time to fix it. After 3 weeks, I have got my mail domain blacklisted by Spamhaus Project.&#xA;When i was researching regarding this blacklisting issues.</description>
+    </item>
+    <item>
+      <title>Self Hosting my own platforms 🧑🏼‍💻</title>
+      <link>https://arulbalaji-pro.github.io/post/self_hosting_platforms/</link>
+      <pubDate>Sun, 26 May 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/self_hosting_platforms/</guid>
+      <description>Why I am Self Hosting my own platforms? Since I decided to come out of Matrix, It pulled me into this rabbit hole. 1. At First it&amp;rsquo;s just my personal Website. &amp;times; 2. Next, My own matrix Chat Server &amp;times; &amp;times; This is my matrix private chat room.&#xA;I have realized. I don&amp;rsquo;t need any softwares that were offered by big tech companies because all the data they collect could be used against us with in split second.</description>
+    </item>
+    <item>
+      <title>NO_UI Update: subscribing youtube via RSS ✨🛠️📱💻</title>
+      <link>https://arulbalaji-pro.github.io/post/no_ui_youtube_subscribe/</link>
+      <pubDate>Wed, 08 May 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/no_ui_youtube_subscribe/</guid>
+      <description>NO_UI got an update!! , Leveraging RSS and invidious For subscribing favourite channels on youtube 💥. Imagine a system that allows you to watch your favourite youtube channels without logging into it, imagine a place without recommendation Algorithms listing catchy videos on your homepage.&#xA;No videos or ads being tailored based on your age, ethnicity, group, religion, or habits.&#xA;Imagine there is restriction on endless scrolling, imagine a youtube without catchy thumbnails.</description>
+    </item>
+    <item>
+      <title>No_UI Project for Digital detox 📱🖥️🛠️</title>
+      <link>https://arulbalaji-pro.github.io/post/no_ui_project/</link>
+      <pubDate>Sat, 27 Apr 2024 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/no_ui_project/</guid>
+      <description>NO_UI Project ✨✌️ I am presenting you the No UI project for tech savvy people and people who want to be in digial detox, bringing cli environment in Android I believe, if we dont have UI we wont use phone mindlessly, cuz you have to think and give commands to your phone for every operations.&#xA;I have debloated all factory installed bloatwares and social media apps including youtube using adb shell.</description>
+    </item>
+    <item>
+      <title>Repurposing a Broken Android Phone into an Hybrid Server 📱💻🛠️</title>
+      <link>https://arulbalaji-pro.github.io/post/broken_phone_server/</link>
+      <pubDate>Wed, 11 Oct 2023 00:00:00 +0530</pubDate>
+      <guid>https://arulbalaji-pro.github.io/post/broken_phone_server/</guid>
+      <description>I have Repurposed a broken Phone into a hybrid server, cuz i believe old broken Electronics aren&amp;rsquo;t trash and can be used in other ways. 🧑🏻‍💻 #1 Making an ssh and sftp file transfer server I have used Termux to achieve all this, its Terminal Emulator that can provide you Linux Environment in your Android, but it can&amp;rsquo;t offer a root environment unless you root your Android.&#xA;I won&amp;rsquo;t recommend rooting either it may brick your phone or make it more vulnerable.</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>https://arulbalaji-pro.github.io/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://arulbalaji-pro.github.io/contact/</guid>
+      <description>Follow me on these platforms.&#xA;Platform URL Email: arulbalaji4321@gmail.com LinkedIn: https://www.linkedin.com/in/arulbalaji-suresh-038a1b218/ Gitea: https://gitea.arulbalaji.xyz Credly: https://www.credly.com/users/arul-balaji.2b41e8a7/badges#credly </description>
+    </item>
+  </channel>
+</rss>

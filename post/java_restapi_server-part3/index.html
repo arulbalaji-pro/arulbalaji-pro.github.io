@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Connecting Java API Backend with a Simple Web Frontend [Part-3] | Arul Balaji</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.131.0">
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:url" content="https://arulbalaji-pro.github.io/post/java_restapi_server-part3/">
+  <meta property="og:site_name" content="Arul Balaji">
+  <meta property="og:title" content="Connecting Java API Backend with a Simple Web Frontend [Part-3]">
+  <meta property="og:description" content="Show Total: × Purchasing product: × Final Total: × We’ve created a clean and functional REST API backend using Java &#43; Javalin, paired with a vanilla HTML &#43; JS frontend — no frameworks, no fuss.
+This post walks through how the two sides talk to each other and explains critical bits like CORS, fetch(), and arrow functions (=&gt;). Simple, clean, and beginner-friendly.
+🔌 Project Overview java-project/ ├── App.java ← REST API (Javalin) ├── Constructor.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-06-24T00:00:00+05:30">
+    <meta property="article:modified_time" content="2025-06-24T00:00:00+05:30">
+
+  <meta itemprop="name" content="Connecting Java API Backend with a Simple Web Frontend [Part-3]">
+  <meta itemprop="description" content="Show Total: × Purchasing product: × Final Total: × We’ve created a clean and functional REST API backend using Java &#43; Javalin, paired with a vanilla HTML &#43; JS frontend — no frameworks, no fuss.
+This post walks through how the two sides talk to each other and explains critical bits like CORS, fetch(), and arrow functions (=&gt;). Simple, clean, and beginner-friendly.
+🔌 Project Overview java-project/ ├── App.java ← REST API (Javalin) ├── Constructor.">
+  <meta itemprop="datePublished" content="2025-06-24T00:00:00+05:30">
+  <meta itemprop="dateModified" content="2025-06-24T00:00:00+05:30">
+  <meta itemprop="wordCount" content="1622">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Connecting Java API Backend with a Simple Web Frontend [Part-3]">
+  <meta name="twitter:description" content="Show Total: × Purchasing product: × Final Total: × We’ve created a clean and functional REST API backend using Java &#43; Javalin, paired with a vanilla HTML &#43; JS frontend — no frameworks, no fuss.
+This post walks through how the two sides talk to each other and explains critical bits like CORS, fetch(), and arrow functions (=&gt;). Simple, clean, and beginner-friendly.
+🔌 Project Overview java-project/ ├── App.java ← REST API (Javalin) ├── Constructor.">
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://arulbalaji-pro.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Arul Balaji
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+      <h1 class="f1 athelas mt3 mb1">Connecting Java API Backend with a Simple Web Frontend [Part-3]</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-06-24T00:00:00&#43;05:30">June 24, 2025</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+
+<h6 id="show-total">Show Total:</h6>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/javaRestApiServer\/show total.png')">
+  <img id="responsiveImage/media/images/javarestapiserver/show-total.png"
+       src="/media/images/javaRestApiServer/show%20total.png"
+       alt="Show Total"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/javarestapiserver\/show-total.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "300";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<h6 id="purchasing-product">Purchasing product:</h6>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/javaRestApiServer\/Purchasing product.png')">
+  <img id="responsiveImage/media/images/javarestapiserver/purchasing-product.png"
+       src="/media/images/javaRestApiServer/Purchasing%20product.png"
+       alt="Purchasing product"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/javarestapiserver\/purchasing-product.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "300";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<h6 id="final-total">Final Total:</h6>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/javaRestApiServer\/Final Total.png')">
+  <img id="responsiveImage/media/images/javarestapiserver/final-total.png"
+       src="/media/images/javaRestApiServer/Final%20Total.png"
+       alt="Final Total"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/javarestapiserver\/final-total.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "300";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>We’ve created a clean and functional REST API backend using <strong>Java + Javalin</strong>, paired with a <strong>vanilla HTML + JS frontend</strong> — no frameworks, no fuss.</p>
+<p>This post walks through how the two sides talk to each other and explains critical bits like <strong>CORS</strong>, <code>fetch()</code>, and arrow functions (<code>=&gt;</code>). Simple, clean, and beginner-friendly.</p>
+<hr>
+<h6 id="-project-overview">🔌 Project Overview</h6>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>java-project/
+</span></span><span style="display:flex;"><span>├── App.java           ← REST API (Javalin)
+</span></span><span style="display:flex;"><span>├── Constructor.java   ← Holds customer info
+</span></span><span style="display:flex;"><span>├── PurchaseDAO.java   ← SQLite DB access
+</span></span><span style="display:flex;"><span>└── frontend/
+</span></span><span style="display:flex;"><span>    ├── index.html     ← HTML Form UI
+</span></span><span style="display:flex;"><span>    ├── app.js         ← JS to call backend
+</span></span><span style="display:flex;"><span>    └── styles.css     ← Basic styling
+</span></span></code></pre></div>
+</div>
+
+
+<hr>
+<hr>
+<h6 id="-java-backend-code-reference-only">🗃️ Java Backend Code (Reference Only)</h6>
+<p>These are the backend files from previous parts. If you&rsquo;re new, start with:</p>
+<ul>
+<li>👉 <a href="https://arulbalaji.xyz/journal/java_restapi_server/">Part 1: ️Building Rest Api Server from scratch using Java and Javalin</a></li>
+<li>👉 <a href="https://arulbalaji.xyz/journal/java_restapi_server-part2/">Part 2: Extending Our Java REST API: Now with SQLite for Persistent Storage</a></li>
+</ul>
+<p>Feel free to browse the full source here:</p>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> com.test;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//Custom Classes Imported below</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.test.PurchaseDAO;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Import necessary classes</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Map;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.HashMap;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Scanner;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> io.javalin.Javalin;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> io.javalin.http.Context;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> io.javalin.plugin.bundled.CorsPluginConfig;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create a Constructor object to hold user and product info</span>
+</span></span><span style="display:flex;"><span>    Constructor construct <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Constructor(<span style="color:#e6db74">&#34;Arul&#34;</span>, 24, <span style="color:#e6db74">&#34;India, TN&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Counter to track number of products purchased</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> productIndex <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Map to store product name as key and price as value</span>
+</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> purchasedProductDetails <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Scanner object to read input from console</span>
+</span></span><span style="display:flex;"><span>    Scanner scanner <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner(System.<span style="color:#a6e22e">in</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    PurchaseDAO db <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PurchaseDAO(); <span style="color:#75715e">// Initializing DB </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Method to record a purchase</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">recordPurchase</span>(String product, <span style="color:#66d9ef">double</span> price) {
+</span></span><span style="display:flex;"><span>        productIndex<span style="color:#f92672">++</span>;  <span style="color:#75715e">// Increment product count</span>
+</span></span><span style="display:flex;"><span>        construct.<span style="color:#a6e22e">setProductName</span>(product);  <span style="color:#75715e">// Set product name</span>
+</span></span><span style="display:flex;"><span>        construct.<span style="color:#a6e22e">setProductPrice</span>(price);   <span style="color:#75715e">// Set product price</span>
+</span></span><span style="display:flex;"><span>        construct.<span style="color:#a6e22e">setTotalProductsPurchased</span>(productIndex);  <span style="color:#75715e">// Update total</span>
+</span></span><span style="display:flex;"><span>        makeList();  <span style="color:#75715e">// Add to local Map</span>
+</span></span><span style="display:flex;"><span>        db.<span style="color:#a6e22e">insertPurchase</span>(product, price); <span style="color:#75715e">// Save to DB</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Read user input from console (for CLI use)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printAndRead</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;[+] Enter the Product &#34;</span> <span style="color:#f92672">+</span> productIndex <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; Name:&#34;</span>);
+</span></span><span style="display:flex;"><span>        String productName <span style="color:#f92672">=</span> scanner.<span style="color:#a6e22e">nextLine</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;[+] Enter price of the Product&#34;</span>);
+</span></span><span style="display:flex;"><span>        Double productPrice <span style="color:#f92672">=</span> scanner.<span style="color:#a6e22e">nextDouble</span>();
+</span></span><span style="display:flex;"><span>        scanner.<span style="color:#a6e22e">nextLine</span>();  <span style="color:#75715e">// Consume newline</span>
+</span></span><span style="display:flex;"><span>        recordPurchase(productName, productPrice);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add product and price to Map</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">makeList</span>() {
+</span></span><span style="display:flex;"><span>        purchasedProductDetails.<span style="color:#a6e22e">put</span>(construct.<span style="color:#a6e22e">getProductName</span>(), construct.<span style="color:#a6e22e">getProductPrice</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Calculate total from DB and print</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">calculateTotalProfit</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">double</span> sum <span style="color:#f92672">=</span> db.<span style="color:#a6e22e">getTotalProfit</span>(); <span style="color:#75715e">// From DB</span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Total profit: ₹&#34;</span> <span style="color:#f92672">+</span> sum);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Start API server</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">startApi</span>() {
+</span></span><span style="display:flex;"><span>        Javalin app <span style="color:#f92672">=</span> Javalin.<span style="color:#a6e22e">create</span>(config <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Enable CORS for frontend origin</span>
+</span></span><span style="display:flex;"><span>            config.<span style="color:#a6e22e">plugins</span>.<span style="color:#a6e22e">enableCors</span>(cors <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                cors.<span style="color:#a6e22e">add</span>(CorsPluginConfig::anyHost); <span style="color:#75715e">// Or use allowHost(&#34;http://localhost:8080&#34;)</span>
+</span></span><span style="display:flex;"><span>            });
+</span></span><span style="display:flex;"><span>        }).<span style="color:#a6e22e">start</span>(7070);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Set JSON response type</span>
+</span></span><span style="display:flex;"><span>        app.<span style="color:#a6e22e">before</span>(ctx <span style="color:#f92672">-&gt;</span> ctx.<span style="color:#a6e22e">contentType</span>(<span style="color:#e6db74">&#34;application/json&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// POST /purchase → Record purchase</span>
+</span></span><span style="display:flex;"><span>        app.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/purchase&#34;</span>, ctx <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            Map<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> data <span style="color:#f92672">=</span> ctx.<span style="color:#a6e22e">bodyAsClass</span>(Map.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>            String product <span style="color:#f92672">=</span> data.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;product&#34;</span>).<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> price <span style="color:#f92672">=</span> Double.<span style="color:#a6e22e">parseDouble</span>(data.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;price&#34;</span>).<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>            recordPurchase(product, price);
+</span></span><span style="display:flex;"><span>            ctx.<span style="color:#a6e22e">status</span>(200).<span style="color:#a6e22e">result</span>(<span style="color:#e6db74">&#34;Recorded: &#34;</span> <span style="color:#f92672">+</span> product <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; for ₹&#34;</span> <span style="color:#f92672">+</span> price);
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// GET /total → Return total profit</span>
+</span></span><span style="display:flex;"><span>        app.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/total&#34;</span>, ctx <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> sum <span style="color:#f92672">=</span> db.<span style="color:#a6e22e">getTotalProfit</span>();
+</span></span><span style="display:flex;"><span>            ctx.<span style="color:#a6e22e">json</span>(Map.<span style="color:#a6e22e">of</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;totalProfit&#34;</span>, sum,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;customerName&#34;</span>, construct.<span style="color:#a6e22e">name</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;customerAge&#34;</span>, construct.<span style="color:#a6e22e">age</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;customerRegion&#34;</span>, construct.<span style="color:#a6e22e">region</span>
+</span></span><span style="display:flex;"><span>            ));
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Main Method</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        App app <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> App();
+</span></span><span style="display:flex;"><span>        app.<span style="color:#a6e22e">startApi</span>();  <span style="color:#75715e">// Start server</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Optional CLI (not needed for frontend, just for manual entry)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> flag <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (flag <span style="color:#f92672">!=</span> 1) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Proceed Adding Products? (Y/N)&#34;</span>);
+</span></span><span style="display:flex;"><span>            String userInput <span style="color:#f92672">=</span> app.<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">nextLine</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (userInput.<span style="color:#a6e22e">equalsIgnoreCase</span>(<span style="color:#e6db74">&#34;Y&#34;</span>)) {
+</span></span><span style="display:flex;"><span>                app.<span style="color:#a6e22e">printAndRead</span>();
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                app.<span style="color:#a6e22e">calculateTotalProfit</span>();
+</span></span><span style="display:flex;"><span>                flag <span style="color:#f92672">=</span> 1;
+</span></span><span style="display:flex;"><span>                app.<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">close</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> com.test;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Constructor</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// User info fields</span>
+</span></span><span style="display:flex;"><span>    String name;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> age;
+</span></span><span style="display:flex;"><span>    String region;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Product-related fields (private for encapsulation)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String purchaseProduct;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">double</span> productPrice;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">double</span> profitOfTheDay;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> totalProductsPurchased;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constructor to initialize user details</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Constructor</span>(String name, <span style="color:#66d9ef">int</span> age, String region) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">region</span> <span style="color:#f92672">=</span> region;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter for product name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getProductName</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> purchaseProduct;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter for product price</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getProductPrice</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> productPrice;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter for profit of the day (not used yet in App)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getProfitOfTheDay</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> profitOfTheDay;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter for product name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setProductName</span>(String purchaseProduct) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">purchaseProduct</span> <span style="color:#f92672">=</span> purchaseProduct;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter for product price</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setProductPrice</span>(<span style="color:#66d9ef">double</span> productPrice) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">productPrice</span> <span style="color:#f92672">=</span> productPrice;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter for profit of the day</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setProfitOfTheDay</span>(<span style="color:#66d9ef">double</span> profitOfTheDay) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">profitOfTheDay</span> <span style="color:#f92672">=</span> profitOfTheDay;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setter for total products purchased</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setTotalProductsPurchased</span>(<span style="color:#66d9ef">int</span> totalProductsPurchased) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">totalProductsPurchased</span> <span style="color:#f92672">=</span> totalProductsPurchased;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Getter for total products purchased</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getTotalProductsPurchased</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> totalProductsPurchased;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> com.test;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.sql.*;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PurchaseDAO</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String DB_URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:sqlite:purchase.db&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">PurchaseDAO</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>(Connection conn <span style="color:#f92672">=</span> DriverManager.<span style="color:#a6e22e">getConnection</span>(DB_URL);
+</span></span><span style="display:flex;"><span>        Statement stmt <span style="color:#f92672">=</span> conn.<span style="color:#a6e22e">createStatement</span>())  
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CREATE TABLE IF NOT EXISTS purchases (&#34;</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;id INTEGER PRIMARY KEY AUTOINCREMENT,&#34;</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;product TEXT NOT NULL,&#34;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;price REAL NOT NULL);&#34;</span>;
+</span></span><span style="display:flex;"><span>         stmt.<span style="color:#a6e22e">execute</span>(sql);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(SQLException e){
+</span></span><span style="display:flex;"><span>        e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insertPurchase</span>(String product, <span style="color:#66d9ef">double</span> price){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO purchases (product, price) VALUES (?,?)&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> (Connection conn <span style="color:#f92672">=</span> DriverManager.<span style="color:#a6e22e">getConnection</span>(DB_URL);
+</span></span><span style="display:flex;"><span>         PreparedStatement pstmt <span style="color:#f92672">=</span> conn.<span style="color:#a6e22e">prepareStatement</span>(sql)){
+</span></span><span style="display:flex;"><span>         
+</span></span><span style="display:flex;"><span>         pstmt.<span style="color:#a6e22e">setString</span>(1, product);
+</span></span><span style="display:flex;"><span>         pstmt.<span style="color:#a6e22e">setDouble</span>(2, price);
+</span></span><span style="display:flex;"><span>         pstmt.<span style="color:#a6e22e">executeUpdate</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(SQLException e){
+</span></span><span style="display:flex;"><span>       e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getTotalProfit</span>(){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> total <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    String sql  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT SUM(price) FROM purchases&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>(Connection conn <span style="color:#f92672">=</span> DriverManager.<span style="color:#a6e22e">getConnection</span>(DB_URL);
+</span></span><span style="display:flex;"><span>        Statement stmt <span style="color:#f92672">=</span> conn.<span style="color:#a6e22e">createStatement</span>();
+</span></span><span style="display:flex;"><span>        ResultSet res <span style="color:#f92672">=</span> stmt.<span style="color:#a6e22e">executeQuery</span>(sql)){
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(res.<span style="color:#a6e22e">next</span>()){
+</span></span><span style="display:flex;"><span>                total <span style="color:#f92672">=</span> res.<span style="color:#a6e22e">getDouble</span>(1);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(SQLException e){
+</span></span><span style="display:flex;"><span>       e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> total;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+
+<hr>
+<h6 id="-enabled-cors-in-java-backend-api-javalin">🛠️ Enabled CORS in Java Backend API (Javalin)</h6>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Javalin app <span style="color:#f92672">=</span> Javalin.<span style="color:#a6e22e">create</span>(config <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>    config.<span style="color:#a6e22e">plugins</span>.<span style="color:#a6e22e">enableCors</span>(cors <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>        cors.<span style="color:#a6e22e">add</span>(CorsPluginConfig::anyHost); <span style="color:#75715e">// Allow all origins (dev only)</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>}).<span style="color:#a6e22e">start</span>(7070);
+</span></span></code></pre></div>
+</div>
+
+
+<h6 id="-what-is-cors">🔐 What is CORS?</h6>
+<p>By default, browsers block JS running on one origin (e.g., <code>localhost:8080</code>) from talking to an API on another (e.g., <code>localhost:7070</code>). This is called <strong>Cross-Origin Request Blocking</strong>.</p>
+<p>✅ To allow the frontend to talk to the backend:</p>
+<ul>
+<li>We <strong>enable CORS</strong> using <code>config.plugins.enableCors(...)</code>.</li>
+<li>For local testing, <code>anyHost</code> is fine.</li>
+<li>In production, always <strong>restrict to specific domains</strong>.</li>
+</ul>
+<hr>
+<h6 id="-frontend-code">🖥️ Frontend Code</h6>
+<p>Let’s break down each part of the frontend.</p>
+<hr>
+<h6 id="-indexhtml">✅ index.html</h6>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">title</span>&gt;Purchase Tracker&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">&lt;!-- Link CSS --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;styles.css&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">&lt;!-- Link JS (corrected attribute typo: &#39;data-jslicence&#39; to &#39;data-jslicense&#39;) --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app.js&#34;</span> <span style="color:#a6e22e">defer</span> <span style="color:#a6e22e">data-jslicense</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;MIT&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">h1</span>&gt;Product Purchase Tracker&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Purchase form --&gt;</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;purchaseForm&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;product&#34;</span>&gt;Product Name:&lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;product&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;product&#34;</span> <span style="color:#a6e22e">required</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span>&gt;Price (₹):&lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span> <span style="color:#a6e22e">step</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0.01&#34;</span> <span style="color:#a6e22e">required</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;Add Purchase&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">form</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Button to fetch total --&gt;</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;totalBtn&#34;</span>&gt;Show Total Profit&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Result will be shown here --&gt;</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;result&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div>
+</div>
+
+
+<h6 id="-how-this-page-talks-to-backend">🧠 How This Page Talks to Backend</h6>
+<ol>
+<li>A form collects <code>product</code> and <code>price</code>.</li>
+<li>JavaScript catches the form submission and sends a <code>POST</code> request to your API.</li>
+<li>The API records it in SQLite.</li>
+<li>You can click another button to send a <code>GET</code> request to show total profit.</li>
+<li>All this is rendered inside the <code>#result</code> div.</li>
+</ol>
+<hr>
+<h6 id="-appjs">🧠 app.js</h6>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Wait until the DOM (HTML page) is fully loaded
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;DOMContentLoaded&#34;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Grab form elements and buttons
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">form</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;purchaseForm&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resultDiv</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;result&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">totalBtn</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;totalBtn&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Handle form submission (Add new Purchase)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">form</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;submit&#34;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>(); <span style="color:#75715e">// Prevent page refresh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Get product and price values from form
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">product</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;product&#34;</span>).<span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">price</span> <span style="color:#f92672">=</span> parseFloat(document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;price&#34;</span>).<span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">product</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">product</span>, <span style="color:#a6e22e">price</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">price</span> };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Send POST request to /purchase endpoint
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;http://localhost:7070/purchase&#34;</span>, {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;POST&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#34;Content-Type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;application/json&#34;</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">body</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">data</span>),
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">text</span>(); <span style="color:#75715e">// Expecting plain text response
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      })
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">resultDiv</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>; <span style="color:#75715e">// Show server response
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">form</span>.<span style="color:#a6e22e">reset</span>(); <span style="color:#75715e">// Clear form inputs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      })
+</span></span><span style="display:flex;"><span>      .<span style="color:#66d9ef">catch</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">error</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">resultDiv</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">error</span>; <span style="color:#75715e">// Show error if any
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      });
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Handle &#34;Show Total Profit&#34; button click (GET from /total)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">totalBtn</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;http://localhost:7070/total&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">response</span>) =&gt; <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>()) <span style="color:#75715e">// Expect JSON response
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">data</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Format and display returned data
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">output</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Name: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">customerName</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Age: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">customerAge</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Region: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">customerRegion</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Total Profit: ₹</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">totalProfit</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        `</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">resultDiv</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">output</span>;
+</span></span><span style="display:flex;"><span>      })
+</span></span><span style="display:flex;"><span>      .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">resultDiv</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">error</span>; <span style="color:#75715e">// Display fetch error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      });
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div>
+</div>
+
+
+<h6 id="-how-javascript-interacts-with-your-java-api">⚙️ How JavaScript Interacts with Your Java API</h6>
+<ul>
+<li>
+<p><strong>When form is submitted</strong>:</p>
+<ul>
+<li>It sends a <code>POST</code> request to: <code>http://localhost:7070/purchase</code></li>
+<li>The Java server reads the body using: <code>ctx.bodyAsClass(Map.class)</code></li>
+<li>It responds with: <code>&quot;Recorded: Laptop for ₹45000&quot;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>When &ldquo;Show Total&rdquo; button is clicked</strong>:</p>
+<ul>
+<li>It sends a <code>GET</code> request to: <code>http://localhost:7070/total</code></li>
+<li>Java API responds with a JSON:</li>
+</ul>
+</li>
+</ul>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;customerName&#34;</span>: <span style="color:#e6db74">&#34;Arul&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;totalProfit&#34;</span>: <span style="color:#ae81ff">75000.5</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;customerRegion&#34;</span>: <span style="color:#e6db74">&#34;India, TN&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;customerAge&#34;</span>: <span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span></code></pre></div>
+</div>
+
+
+<ul>
+<li>JS displays this in <code>#result</code>.</li>
+</ul>
+<hr>
+<h6 id="-about-the--arrow-function">🔁 About the <code>=&gt;</code> Arrow Function</h6>
+<p>This is modern JavaScript syntax to define functions:</p>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">data</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>);
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div>
+</div>
+
+
+<p>⬆️ Same as:</p>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>);
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div>
+</div>
+
+
+<p>Arrow functions are shorter and preserve the <code>this</code> context.</p>
+<hr>
+<h6 id="-stylescss">🎨 styles.css</h6>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">body</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">font-family</span>: <span style="color:#66d9ef">sans-serif</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f4f4f4</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">container</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">max-width</span>: <span style="color:#ae81ff">500</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">margin</span>: <span style="color:#66d9ef">auto</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background</span>: <span style="color:#66d9ef">white</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">8</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">box-shadow</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> rgba(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.1</span>); <span style="color:#75715e">/* optional visual polish */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">input</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">button</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">block</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">margin-top</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">8</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#result {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">margin-top</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">white-space</span>: <span style="color:#66d9ef">pre-wrap</span>; <span style="color:#75715e">/* keep newlines and wrap long lines */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+
+<h6 id="-css-breakdown">🎨 CSS Breakdown</h6>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>What it Targets</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>body</code></td>
+<td>Whole webpage</td>
+<td>Applies a clean sans-serif font, sets light-gray background and padding for spacing.</td>
+</tr>
+<tr>
+<td><code>.container</code></td>
+<td>The main box around the form and results</td>
+<td>Creates a centered white card with padding, rounded corners, and a soft drop shadow to make it visually appealing.</td>
+</tr>
+<tr>
+<td><code>input, button</code></td>
+<td>All input fields and buttons</td>
+<td>Makes them full width, evenly padded, and consistent in size—ensures good mobile and desktop layout.</td>
+</tr>
+<tr>
+<td><code>#result</code></td>
+<td>The output display for responses</td>
+<td>Adds top margin and <code>white-space: pre-wrap</code> so that multi-line text (like API JSON) is displayed clearly and wrapped properly.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h6 id="-check-my-repo">🌐 check my repo:</h6>
+<p>Uploaded this project in below repo link:</p>
+<p><a href="https://gitea.arulbalaji.xyz/arul/fullstack_practice">🔗 View Source on My Gitea</a></p>
+<h5 id="-thats-it">✅ That’s it</h5>
+<p>You’ve now connected a pure HTML/JS frontend to a Java API backend — no React, no JSP, no extra tools.</p>
+<p>See you with another Interesting post, Untill then, happy coding. 🚀</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://arulbalaji-pro.github.io/" >
+    &copy;  Arul Balaji 2026 
+  </a>
+    <div>
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

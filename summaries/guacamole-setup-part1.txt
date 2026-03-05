@@ -1,0 +1,288 @@
+---
+
+##### 🚀 Self-Hosting Apache Guacamole with Docker
+
+Apache Guacamole is a clientless remote desktop gateway that supports standard protocols like VNC, RDP, and SSH and it requires zero setup. All you need is a browser from a stranger's PC to access your full home network, computers, homeservers.
+
+Let's set it up using Docker!
+
+**Step 1: Pull Required Docker Images**
+
+Let’s get the Guacamole components and the database image from Docker Hub:
+
+sudo docker pull guacamole/guacamole:1.4.0
+sudo docker pull guacamole/guacd:1.4.0
+sudo docker pull mariadb:10.9.5
+
+**Step 2: Generate the Initial Database Schema**
+
+Guacamole doesn’t ship with its database schema built-in. We’ll use the `initdb.sh` script to generate it:
+
+sudo docker run --rm guacamole/guacamole:1.4.0 /opt/guacamole/bin/initdb.sh --mysql > initdb.sql
+
+This creates a file `initdb.sql` on your host with all the SQL needed to initialize Guacamole’s DB.
+
+**Step 3: Spin Up MariaDB with Docker Compose**
+
+Create a basic `docker-compose.yml` using your favorite text editor (I’m using `nano` here):
+
+sudo nano docker-compose.yml
+
+Paste the following:
+
+version: '3'
+services:
+  guacdb:
+    container_name: guacamoledb
+    image: mariadb:10.9.5
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'MariaDBRootPass'
+      MYSQL_DATABASE: 'guacamole_db'
+      MYSQL_USER: 'guacamole_user'
+      MYSQL_PASSWORD: 'MariaDBUserPass'
+    volumes:
+      - './db-data:/var/lib/mysql'
+
+volumes:
+  db-data:
+
+Then start it up:
+
+sudo docker-compose up -d
+
+**Step 4: Load the SQL Schema into the Database**
+
+Now, copy the SQL file into the running DB container:
+
+sudo docker cp initdb.sql guacamoledb:/initdb.sql
+
+Enter the container:
+
+sudo docker exec -it guacamoledb bash
+
+Run the SQL to initialize the database:
+
+cat /initdb.sql | mysql -u root -p guacamole_db
+exit
+
+When prompted, enter the `MYSQL_ROOT_PASSWORD` you used earlier (`MariaDBRootPass` in this case). After it's done, type `exit` to leave the container.
+
+and now time for your to turn off the DB by running 
+
+sudo docker compose down
+
+**Optional: Clean Up and Backup**
+
+Let’s take a backup of the current Docker Compose file before we add the rest of the services:
+
+cp docker-compose.yml docker-compose.yml.bak
+
+**Step 5: Add Guacamole and guacd to Docker Compose**
+
+Now edit `docker-compose.yml` and add these services:
+
+version: '3'
+services:
+  guacdb:
+    container_name: guacamoledb
+    image: mariadb:10.9.5
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'MariaDBRootPass'
+      MYSQL_DATABASE: 'guacamole_db'
+      MYSQL_USER: 'guacamole_user'
+      MYSQL_PASSWORD: 'MariaDBUserPass'
+    volumes:
+      - './db-data:/var/lib/mysql'
+
+  guacd:
+    container_name: guacd
+    image: guacamole/guacd:1.4.0
+    restart: unless-stopped
+
+  guacamole:
+    container_name: guacamole
+    image: guacamole/guacamole:1.4.0
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      GUACD_HOSTNAME: "guacd"
+      MYSQL_HOSTNAME: "guacdb"
+      MYSQL_DATABASE: "guacamole_db"
+      MYSQL_USER: "guacamole_user"
+      MYSQL_PASSWORD: "MariaDBUserPass"
+      TOTP_ENABLED: "true"
+    depends_on:
+      - guacdb
+      - guacd
+
+volumes:
+  db-data:
+
+**Step 6: Launch the Full Stack**
+
+Now bring it all up:
+
+sudo docker-compose up -d
+
+Once everything’s up and running, open:
+
+<http://127.0.0.1:8080>
+
+You should see the Guacamole web interface!
+
+**🧪 Troubleshooting**
+
+If the page doesn’t load, it's possible port `8080` is already in use. You can either:
+
+**🔄 Change the port:**
+
+In the `docker-compose.yml` service section:
+
+#Old:
+
+restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+
+#New:
+restart: unless-stopped
+    ports:
+      - 8085:8080
+    environment:
+
+The one on the Left is the host exposed port. I modified the config to expose the guacamole service on
+port 8085.
+
+Then restart:
+
+sudo docker-compose down && sudo docker-compose up -d
+
+And access via:
+
+<http://127.0.0.1:8085>
+
+**🔍 Or check for port conflicts:**
+
+sudo netstat -tunlp | grep 8080
+
+If another service is using port `8080`, kill it:
+
+sudo killall <"service-name">
+
+Or:
+
+sudo pgrep <"service-name">
+sudo kill <"PID">
+
+**Step 7: Set Up Your DNS Records**
+
+Before your domain can properly route to Guacamole, you’ll need to configure DNS records. This is typically done from your domain registrar or DNS provider (like Cloudflare, Namecheap, etc.).
+
+**Add an A Record**
+
+- **Type**: `CNAME`  
+
+- **Name**: `subdomain` *(or whatever you want your subdomain to be)*  
+
+- **Value**: `YOUR.DOMAIN` *(your domain name)*  
+
+- **TTL**: Auto or 5 min  
+
+>  **Note**: DNS propagation may take a few minutes to reflect across the internet.
+
+**✅ Test the DNS**
+
+After saving the record, you can verify it’s working by running this from any terminal:
+
+dig subdomain.example.com +short
+
+You should see your server’s IP address returned.
+
+**Step 8:  Configure NGINX Reverse Proxy**
+
+Let’s expose Guacamole through your domain using NGINX as a reverse proxy with HTTPS.
+
+**📝 Create NGINX Site Configuration**
+
+Create a new config file:
+
+sudo nano /etc/nginx/sites-available/guacamole
+
+Paste the following:
+
+# Redirect HTTP to HTTPS
+server {
+    listen 80;
+    server_name subdomain.example.com;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# Reverse proxy for Guacamole
+server {
+    listen 443 ssl;
+    server_name subdomain.example.com;
+
+    location / {
+        proxy_pass http://localhost:8080/guacamole/;
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_socket_keepalive on;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        send_timeout 60s;
+    }
+}
+
+> 🧠 **Heads-up**: Change the domain to your own (`subdomain.example.com` → your actual domain) and update the `proxy_pass` if your Guacamole container uses a different port or path.
+
+**Step 9: Get Let's Encrypt SSL Certificate**
+
+Install Certbot and issue the SSL certificate using the NGINX plugin:
+
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d subdomain.example.com
+
+Certbot will handle SSL certificate installation and update the NGINX config automatically.
+
+**Step 10: Enable the NGINX Config**
+
+Create a symlink so NGINX picks up your new site configuration:
+
+sudo ln -s /etc/nginx/sites-available/guacamole /etc/nginx/sites-enabled/guacamole
+
+**Step 11: Test & Restart NGINX**
+
+Make sure there are no syntax errors and reload NGINX:
+
+sudo nginx -t && sudo systemctl restart nginx
+
+**Step 12: Access Your Guacamole Instance**
+
+Open your browser and go to:
+
+https://subdomain.example.com
+
+You should see Guacamole's login screen!
+
+**🎉 Done!**
+
+You’ve now got a working self-hosted instance of Apache Guacamole running through Docker! 🎊. Now you can have your whole desktop PC or your home server from your home to somewhere else even on your friends Laptop or a strangers PC.
+
+**Reference:**
+
+Richard Tirtadji, "How to install Guacamole using docker (step-by-step)". Kr designs February 13, 2023, [Krdesigns.com](https://krdesigns.com/articles/how-to-install-guacamole-using-docker-step-by-step)

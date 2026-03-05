@@ -1,0 +1,61 @@
+---
+
+**New Year, New Project: Introducing My Cyberdeck**
+
+Happy New Year, everyone! As we kick off 2025, I’m excited to share with you my latest project: the **Cyberdeck**.
+
+##### What is a Cyberdeck?
+
+A Cyberdeck is a portable, modular personal computer designed for a very specific set of needs and goals. Unlike traditional laptops or mobile devices, which come with fixed configurations, a Cyberdeck offers flexibility and customization like no other. It’s not built with aesthetics in mind—its purpose is practical, functional, and driven by the creator’s vision. 
+
+This is a machine built for freedom, privacy, and customization. The design and functionality of a Cyberdeck vary depending on who creates it, making it a truly personal device. For those with a hacker’s mentality, it’s a dream come true.
+
+##### How Is My Cyberdeck Different?
+
+As many of you know, I deeply value freedom and privacy. In today’s digital age, most of our devices—phones, laptops, tablets—are constantly monitoring us. They collect our data, often without our knowledge or consent, and sell it to the highest bidder. But the consequences are far worse than just targeted ads. This data is used to manipulate people, categorize them, and even push harmful agendas through covert psychological operations (psyops). These tactics control the masses with minimal effort, and it’s all driven by data.
+
+We’re living in an era where the top 1% will stop at nothing to maintain power, using data manipulation and surveillance to shape society as they see fit. And all of this is done under the guise of convenience or business.
+
+That’s why I decided to build my own Cyberdeck. I want a machine where I control the data—not the corporations, governments, or anyone else. 
+
+##### A Focus on Privacy: Homeserver Integration
+
+One key feature of my Cyberdeck is its integration with my **homeserver web apps**. These are self-hosted applications that allow me to manage everything I need without relying on third-party services. This setup ensures **minimal data leakage** and takes privacy to new heights. By keeping everything on my own server, I have complete control over the data I generate and store. There's no need to worry about shady data practices or surveillance; everything is encrypted and kept within my personal network.
+
+This means I can access web-based tools and services on my Cyberdeck without sending data to centralized platforms where it can be harvested. Whether it’s for communication, file storage, or other tasks, my Cyberdeck gives me the peace of mind that my data is mine alone.
+
+##### The Features of My Cyberdeck
+
+One of the standout features of my Cyberdeck is its **modularity**. Every part can be customized, added, or removed based on my needs. This is a huge advantage when it comes to controlling the flow of data. I can modify hardware as necessary to ensure complete control over my privacy.
+
+For example, my Cyberdeck comes with hardware-level switches for both the microphone and the camera, so I can physically turn them off when I don’t want them activated. For now, since this is just a prototype, I’ve covered the camera with tape and used paper as a temporary solution, but in future models, the switches will be more refined.
+
+Since my Cyberdeck runs on **Linux**, the level of customization is even greater. Linux offers an unmatched ability to control and modify every aspect of the system, from the operating system itself to individual applications and settings. It’s a hacker’s dream and gives me the power to keep my data private and secure.
+
+##### Raspberry Pi: The Heart of My Cyberdeck
+
+At the core of my Cyberdeck is the Raspberry Pi, a powerful and versatile single-board computer. The Raspberry Pi is an ideal choice for this project because of its small size, low power consumption, and open-source nature, making it perfect for building a customizable and privacy-focused device.
+
+It allows me to create a portable system that I can easily modify and upgrade. Using the Raspberry Pi also ensures that the Cyberdeck stays modular—if I want to switch out components or try new configurations, it’s a straightforward process. This is critical in ensuring the system stays flexible and adaptable to my needs.
+
+##### Prototype 1 Images
+
+Here’s a look at **Prototype 1**. This was the very first version of the Cyberdeck and served as the foundation for everything that came after. The design was rudimentary, but it gave me valuable insight into how the Cyberdeck should come together and what adjustments needed to be made for future prototypes.
+
+##### Assembly Images (Prototype 1)
+
+These assembly images show how the components of **Prototype 1** were connected—at this stage, everything is still in a testing phase, so the parts aren’t housed properly. Wires and cables are exposed, and the configuration is far from the final design. But it was necessary to test the core functionality of the system.
+
+##### Prototype 2 Images
+
+This is **Prototype 2**, which shows a more refined, modular approach. While it’s still a work in progress, it represents a significant step forward in both design and functionality. The components are now more organized, and I’ve started focusing on how to securely enclose everything in the final version.
+
+##### What’s Next for the Cyberdeck?
+
+While the prototype is still in its early stages, I’m excited to continue improving it. This is just the beginning, and I have plenty of ideas on how to take it further. Over time, I plan to refine the design, add new features, and make it even more modular and customizable. I’ll keep you all updated as I make progress on future versions of the Cyberdeck.
+
+Thanks for following along with this new project! Stay tuned for more updates.
+
+---
+
+This version includes a clearer distinction between the assembly images and the two prototypes, emphasizing the progression from raw assembly to a more polished design in Prototype 2.

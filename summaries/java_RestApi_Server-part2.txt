@@ -1,0 +1,409 @@
+---
+
+In [Part 1](https://arulbalaji.xyz/journal/java_restapi_server/), we built a simple backend API using **Java + Javalin**, allowing product purchases to be added and tracked. But there was one major limitation:
+
+> **Data was not persistent.** All records vanished after a restart.
+
+This time, we're fixing that. 🔥
+
+> Welcome to **Part 2**, where we add **SQLite** as our lightweight database engine, and track purchases in a real `.db` file locally.
+
+This project still follows the same learning-first mindset:
+
+* ✅ Simple Console + REST Interface
+* ✅ Minimal Code
+* ✅ Run with Maven
+
+No login systems, no user accounts. Just raw Java + a file-based DB that lives right beside your project.
+
+---
+
+##### 🧠 What Changed?
+
+In Part 1:
+
+* We held purchase data in memory (`HashMap<String, Double>`)
+
+Now in Part 2:
+
+* Purchases are saved to a SQLite database
+* GET `/total` calculates from the DB
+* POST `/purchase` writes into the DB
+
+We're still simulating a fictional user named **Arul** (India, TN) — but this user is just a Java object, **not saved to DB**. The profile exists only for output context.
+
+---
+
+##### 🛠️ What's Inside the Code?
+
+We now have 3 main files:
+
+##### ✅ `App.java`
+
+package com.test;
+
+//Custom Classes Imported below
+import com.test.PurchaseDAO;
+
+// Import necessary classes
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import io.javalin.Javalin;
+public class App {
+
+    // Create a Constructor object to hold user and product info
+    Constructor construct = new Constructor("Arul", 24, "India, TN");
+
+    // Counter to track number of products purchased
+    int productIndex = 0;
+
+    // Map to store product name as key and price as value
+    Map<String, Double> purchasedProductDetails = new HashMap<>();
+
+    // Scanner object to read input from console
+    Scanner scanner = new Scanner(System.in);
+
+    PurchaseDAO db = new PurchaseDAO(); // Initializing DB 
+
+    // Method to record a purchase: update product info and add to list
+    public void recordPurchase(String product, double price) {
+        productIndex++;  // Increment product count
+        construct.setProductName(product);  // Set product name in Constructor
+        construct.setProductPrice(price);   // Set product price in Constructor
+        construct.setTotalProductsPurchased(productIndex);  // Update total count
+        makeList();  // Add product to purchasedProductDetails map
+        db.insertPurchase(product, price); // Save to DB.
+    }
+
+    // Method to read product details from console input
+    public void printAndRead() {
+        System.out.println("[+] Enter the Product " + productIndex + " Name:");
+        String productName = scanner.nextLine();  // Read product name
+        System.out.println("[+] Enter price of the Product");
+        Double productPrice = scanner.nextDouble();  // Read product price
+        scanner.nextLine();  // Consume leftover newline character
+        recordPurchase(productName, productPrice);  // Record this purchase
+    }
+
+    // Add the current product and price to the purchase list map
+    public void makeList() {
+        purchasedProductDetails.put(construct.getProductName(), construct.getProductPrice());
+    }
+
+    // Calculate and print the total sum of all purchased product prices
+    public void calculateTotalProfit() {
+        //double sum = 0;
+        // Loop through all values (prices) in the map and add them
+        //for (double price : purchasedProductDetails.values()) {
+        //    sum += price;
+        //}  
+        //Commenting old code above which gets Total profit from API and sums up itself below, instead we get total from DB instead:
+        double sum = db.getTotalProfit(); // ✅ From DB
+        System.out.println("Total profit: ₹" + sum);  // Print total profit
+    }
+
+    // Start the REST API using Javalin framework
+    public void startApi() {
+        // Create and start Javalin server on port 7070
+        Javalin app = Javalin.create(config -> {
+            // You can add server configuration here if needed (e.g., CORS)
+        }).start(7070);
+
+        // Set default response content type to JSON for all requests
+        app.before(ctx -> ctx.contentType("application/json"));
+
+        // POST endpoint '/purchase' to add new purchase data
+        app.post("/purchase", ctx -> {
+            // Parse request JSON body into a Map
+            Map<String, Object> data = ctx.bodyAsClass(Map.class);
+            // Extract product name and price from the request
+            String product = data.get("product").toString();
+            double price = Double.parseDouble(data.get("price").toString());
+            recordPurchase(product, price);  // Record the purchase
+            // Respond with success message
+            ctx.status(200).result("Recorded: " + product + " for ₹" + price);
+        });
+
+        // GET endpoint '/total' to return total profit as JSON
+        app.get("/total", ctx -> {
+            // Sum all product prices from purchasedProductDetails
+           // double sum = purchasedProductDetails.values().stream()
+           //              .mapToDouble(Double::doubleValue).sum();
+            // Send JSON response with totalProfit key
+            //Commenting old code above which gets Total profit from API and sums up itself, instead below we get total from DB instead:
+            double sum = db.getTotalProfit(); // ✅ From DB
+            ctx.json(Map.of("totalProfit", sum,
+                            "customerName", construct.name,
+                            "customerAge", construct.age,
+                            "customerRegion", construct.region  ));
+        });
+    }
+
+    // Main method - program entry point
+    public static void main(String[] args) {
+        App app = new App();  // Create App instance
+        app.startApi();       // Start the API server
+
+        // Optional CLI: allow user to add products via console
+        int flag = 0;
+        while (flag != 1) {
+            System.out.println("Proceed Adding Products? (Y/N)");
+            String userInput = app.scanner.nextLine();
+            if (userInput.equalsIgnoreCase("Y")) {
+                app.printAndRead();  // Read product and price from user input
+            } else {
+                app.calculateTotalProfit();  // Show total profit and exit
+                flag = 1;                    // End loop
+                app.scanner.close();         // Close Scanner resource
+            }
+        }
+    }
+}
+
+**Explanation:**
+
+* Starts a REST server using Javalin at port 7070.
+* Accepts purchases via `/purchase` and saves them to SQLite.
+* Calculates total profit via `/total`, now fetched from the DB.
+* Contains optional CLI interface for manual input.
+
+##### ✅ `Constructor.java`
+
+package com.test;
+public class Constructor {
+
+    // User info fields
+    String name;
+    int age;
+    String region;
+
+    // Product-related fields (private for encapsulation)
+    private String purchaseProduct;
+    private double productPrice;
+    private double profitOfTheDay;
+    private int totalProductsPurchased;
+
+    // Constructor to initialize user details
+    public Constructor(String name, int age, String region) {
+        this.age = age;
+        this.name = name;
+        this.region = region;
+    }
+
+    // Getter for product name
+    public String getProductName() {
+        return purchaseProduct;
+    }
+
+    // Getter for product price
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    // Getter for profit of the day (not used yet in App)
+    public double getProfitOfTheDay() {
+        return profitOfTheDay;
+    }
+
+    // Setter for product name
+    public void setProductName(String purchaseProduct) {
+        this.purchaseProduct = purchaseProduct;
+    }
+
+    // Setter for product price
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    // Setter for profit of the day
+    public void setProfitOfTheDay(double profitOfTheDay) {
+        this.profitOfTheDay = profitOfTheDay;
+    }
+
+    // Setter for total products purchased
+    public void setTotalProductsPurchased(int totalProductsPurchased) {
+        this.totalProductsPurchased = totalProductsPurchased;
+    }
+
+    // Getter for total products purchased
+    public int getTotalProductsPurchased() {
+        return totalProductsPurchased;
+    }
+}
+
+**Explanation:**
+
+* Simple Java class holding user details (name, age, region).
+* Also tracks product-related info (name, price, count).
+
+##### ✅ `PurchaseDAO.java`
+
+package com.test;
+import java.sql.*; 
+
+public class PurchaseDAO {
+
+    // SQLite database URL; the DB file will be created in the root directory if it doesn't exist
+    private static final String DB_URL = "jdbc:sqlite:purchase.db";
+
+    // Constructor: runs when PurchaseDAO object is created
+    // Ensures the 'purchases' table exists in the database
+    public PurchaseDAO() {
+        try (Connection conn = DriverManager.getConnection(DB_URL); // Connect to DB
+             Statement stmt = conn.createStatement())                // Create a SQL statement object
+        {
+            // SQL query to create table if it doesn't already exist
+            String sql = "CREATE TABLE IF NOT EXISTS purchases (" 
+                       + "id INTEGER PRIMARY KEY AUTOINCREMENT,"    // Unique ID for each record
+                       + "product TEXT NOT NULL,"                   // Product name (text, cannot be null)
+                       + "price REAL NOT NULL);";                   // Product price (float number, cannot be null)
+            stmt.execute(sql); // Execute the SQL command to create the table
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print stack trace if any SQL error occurs
+        }
+    }
+
+    // Method to insert a purchase record into the 'purchases' table
+    public void insertPurchase(String product, double price) {
+        String sql = "INSERT INTO purchases (product, price) VALUES (?, ?)"; // SQL with placeholders
+
+        try (Connection conn = DriverManager.getConnection(DB_URL); // Connect to DB
+             PreparedStatement pstmt = conn.prepareStatement(sql)) // Prepare the SQL statement
+        {
+            pstmt.setString(1, product); // Set the first placeholder to the product name
+            pstmt.setDouble(2, price);   // Set the second placeholder to the price
+            pstmt.executeUpdate();       // Execute the SQL update (insert)
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print any error
+        }
+    }
+
+    // Method to calculate total profit (sum of all prices in the DB)
+    public double getTotalProfit() {
+        double total = 0; // Variable to store total profit
+        String sql = "SELECT SUM(price) FROM purchases"; // SQL query to calculate sum of prices
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);  // Connect to DB
+             Statement stmt = conn.createStatement();                // Create statement
+             ResultSet res = stmt.executeQuery(sql))                 // Execute query and get result
+        {
+            if (res.next()) {
+                total = res.getDouble(1); // Get the sum from first column of the result set
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle SQL errors
+        }
+
+        return total; // Return the computed total profit
+    }
+}
+
+**Explanation:**
+
+* Handles SQLite DB interactions using JDBC.
+* Creates the `purchases` table on startup if not present.
+* `insertPurchase()` adds a row.
+* `getTotalProfit()` returns the sum of all prices in DB.
+
+##### 🧾 POST `/purchase`
+
+curl -X POST [http://localhost:7070/purchase](http://localhost:7070/purchase)&#x20;
+-H "Content-Type: application/json"&#x20;
+-d '{"product": "Laptop", "price": 45000.50}'
+
+> ✅ This adds the product to `purchase.db` table.
+
+##### 📊 GET `/total`
+
+curl -w "\nHTTP Status: %{http_code}\n" http://localhost:7070/total
+
+**Response:**
+
+{
+"customerName": "Arul",
+"totalProfit": 45000.5,
+"customerRegion": "India, TN",
+"customerAge": 24
+}
+
+> ✅ This queries the DB to calculate the sum of prices.
+
+---
+
+##### ⚙️ SQLite Integration
+
+SQLite was used here for simplicity — a `.db` file gets auto-created and stores purchase records with this schema:
+
+CREATE TABLE IF NOT EXISTS purchases (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+product TEXT NOT NULL,
+price REAL NOT NULL
+);
+
+used `JDBC` directly instead of ORM for full control and transparency.
+
+---
+
+##### 📂 Project Structure
+
+src/
+com/test/
+App.java
+Constructor.java
+PurchaseDAO.java
+purchase.db   <-- gets created on first run
+
+---
+
+##### 📚 Maven Dependencies (Updated)
+
+Added SQLite JDBC:
+
+ 
+<dependency>
+    <groupId>org.xerial</groupId>
+    <artifactId>sqlite-jdbc</artifactId>
+    <version>3.45.1.0</version>
+</dependency>
+
+And retained Javalin & Jackson for REST:
+
+ 
+<dependency>
+      <groupId>io.javalin</groupId>
+      <artifactId>javalin</artifactId>
+      <version>5.6.3</version>
+</dependency>
+    
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.0</version>
+</dependency>
+
+---
+
+##### 🧪 Run it with Maven
+
+mvn clean compile
+mvn compile exec:java -Dexec.mainClass=com.test.App
+
+You can use either the console tool curl/GUI toolPostman to test.
+
+---
+
+##### 🙋 FAQ
+
+**Q: Is user data saved to DB?**
+
+> ❌ No. The customer info (`Arul`, age, location) is hardcoded inside Java classes. Only product + price go to DB.
+
+**Q: Why SQLite?**
+
+> Because it's lightweight, serverless, and works without any setup.
+
+Hope you have Learn't something here, Peace :)
+
+---

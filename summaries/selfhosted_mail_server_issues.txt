@@ -1,0 +1,25 @@
+##### Big Tech Politics on Mail Server
+
+I have worked on creating a Mail server for couple of days and setup DNS Records for Mail.
+
+My mail server hit 9/10 score in MailTester website. but my DKIM records and Reverse DNS Doesn't Look good.Unfortunately I haven't got time to fix it. After 3 weeks, I have got my mail domain blacklisted by Spamhaus Project.
+
+When i was researching regarding this blacklisting issues. I have realised that not only just improper DNS records makes a mail domain blacklisted, but also bad reputation and bad Email Practices. which is just not worth all the efforts. I have created multiple removal request tickets in Spamhaus project site. still they didn't provide any reason or valuable feedback regarding the mail blacklist and provided me with same reply again and again.
+
+which is annoying, they just come up with one point. your mail is not associated with your domain arulinbox.xyz
+
+my selfhosted mail previously : arul@arulinbox.xyz
+
+###### I have Failed the Email Server Battle, No Matter How Long you have a Email Server it would be Blacklisted or it would be Spammed and Blacklisted Eventually.
+
+It's because your selfhosted mail has to connect with big tech mail anyways. They would surely ban your mails.
+
+I have switched to a email service tutamail, which is a privacy oriented Email service provider. I know its not better
+compared to selfhosting services in terms of privacy. But its the only option we are left with.
+
+Email is built predominantly for business. and it would often dominated by Big Tech Companies. so i would rather pick 
+tutamail, than google, Microsoft or other email service providers.
+
+This is my New Mail: arulbalaji00@tutamail.com
+
+Peace :)

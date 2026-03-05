@@ -1,0 +1,3229 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Git Tutorial [Part 2] - Merging the branches to Main Repo | Arul Balaji</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.131.0">
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:url" content="https://arulbalaji-pro.github.io/post/git-tutorial-part2/">
+  <meta property="og:site_name" content="Arul Balaji">
+  <meta property="og:title" content="Git Tutorial [Part 2] - Merging the branches to Main Repo">
+  <meta property="og:description" content="1. Verify Current Branch and Checkout
+Since we were working on branch v2.0 in our previous tutorial Git Tutorial Part 1, let’s verify that it’s still the current branch.
+Note: Imagine you’re another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch v2.1, instead of using the branch (v2.0), to keep your work in seperate branch.
+Later on, these code changes will be merged into the main branch by our lead or manager.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-04-05T00:00:00+05:30">
+    <meta property="article:modified_time" content="2025-04-05T00:00:00+05:30">
+
+  <meta itemprop="name" content="Git Tutorial [Part 2] - Merging the branches to Main Repo">
+  <meta itemprop="description" content="1. Verify Current Branch and Checkout
+Since we were working on branch v2.0 in our previous tutorial Git Tutorial Part 1, let’s verify that it’s still the current branch.
+Note: Imagine you’re another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch v2.1, instead of using the branch (v2.0), to keep your work in seperate branch.
+Later on, these code changes will be merged into the main branch by our lead or manager.">
+  <meta itemprop="datePublished" content="2025-04-05T00:00:00+05:30">
+  <meta itemprop="dateModified" content="2025-04-05T00:00:00+05:30">
+  <meta itemprop="wordCount" content="821">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Git Tutorial [Part 2] - Merging the branches to Main Repo">
+  <meta name="twitter:description" content="1. Verify Current Branch and Checkout
+Since we were working on branch v2.0 in our previous tutorial Git Tutorial Part 1, let’s verify that it’s still the current branch.
+Note: Imagine you’re another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch v2.1, instead of using the branch (v2.0), to keep your work in seperate branch.
+Later on, these code changes will be merged into the main branch by our lead or manager.">
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://arulbalaji-pro.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Arul Balaji
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+      <h1 class="f1 athelas mt3 mb1">Git Tutorial [Part 2] - Merging the branches to Main Repo</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-04-05T00:00:00&#43;05:30">April 5, 2025</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><hr>
+<p><strong>1. Verify Current Branch and Checkout</strong><br>
+Since we were working on branch <code>v2.0</code> in our previous tutorial <a href="https://arulbalaji.xyz/journal/git-tutorial-part1/">Git Tutorial Part 1</a>, let&rsquo;s verify that it&rsquo;s still the current branch.</p>
+<p>Note: Imagine you&rsquo;re another team member (Person X) who needs to document a cronjob expression in README.md. You pushed your code changes to branch <code>v2.1</code>, instead of using the branch (<code>v2.0</code>), to keep your work in seperate branch.<br>
+Later on, these code changes will be merged into the main branch by our lead or manager.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 11.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-11.png"
+       src="/media/images/git-tutorial/git-part2/git%2011.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-11.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>We can change the current branch to <code>v2.1</code> for this tutorial.</p>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># verify the current staging branch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git branch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#checkout to desired branch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git checkout -b &lt;&#34;provide your desired branch name&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#verify if the branch is switched to your desired branch name (In my case switching branch from v2.0 to my desired branch v2.1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git branch
+</span></span></code></pre></div>
+</div>
+
+
+<p><strong>2. Modify the File</strong><br>
+I&rsquo;ll edit README.md using Vim editor in my terminal (or Notepad/your favorite text editor if you&rsquo;re on Windows). Person X has documented a cron expression to initiate the backup server script, which is just one file that needs to be pushed to branch <code>v2.1</code>.</p>
+<p>To stage this change:</p>
+<ul>
+<li>Add files for staging.</li>
+<li>Commit changes with a useful message.</li>
+<li>Push code changes to your desired branch.</li>
+</ul>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 13.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-13.png"
+       src="/media/images/git-tutorial/git-part2/git%2013.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-13.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 14.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-14.png"
+       src="/media/images/git-tutorial/git-part2/git%2014.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-14.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>now person X have documented the cron expression to initiate the back-up server script. (Just a file that was modified and will be pushed in v2.1, like we did in previous article with v2.0)</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 15.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-15.png"
+       src="/media/images/git-tutorial/git-part2/git%2015.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-15.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>on above screen. Person X have added only README.md for staging in v2.1.</p>
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#below command adds one or more then one file for staging
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># adding single file for staging
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git add &lt;&#34;Provide Modified File&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#adding multiple files for staging
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git add &lt;&#34;file1&#34;&gt; &lt;&#34;file2&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># commit the changes with useful hint or message.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git commit -m &lt;&#34;Provide a hint or a message that describes about your code or file change&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># push your code change to your desired branch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git push -u origin &lt;&#34;Provide your desired branch name&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span></code></pre></div>
+</div>
+
+
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 16.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-16.png"
+       src="/media/images/git-tutorial/git-part2/git%2016.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-16.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Note: Incase if your git account username is not being accepted. provide your git registered email id instead.<br>
+Since branch <code>v2.1</code> doesn&rsquo;t exist yet, Git will create it automatically.</p>
+<p><strong>3. Check the GitHub or WebUI</strong><br>
+You&rsquo;ll see a notification on top of the web UI saying &ldquo;You pushed on branch v2.1 2 minutes ago.&rdquo; This indicates that our code push was successful!</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 17.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-17.png"
+       src="/media/images/git-tutorial/git-part2/git%2017.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-17.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Switch to branch <code>v2.0</code> and then back to <code>v2.1</code>. You should be able to see README.md with its latest modifications, along with a timestamp.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 18.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-18.png"
+       src="/media/images/git-tutorial/git-part2/git%2018.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-18.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>As you can see README.md file is being pushed with latest modification and the timestamp is displayed as &ldquo;2 minutes ago&rdquo;</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 19.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-19.png"
+       src="/media/images/git-tutorial/git-part2/git%2019.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-19.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>we can also able to see that the README.md in git repo. displays our cron job related documentation successfully.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 20.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-20.png"
+       src="/media/images/git-tutorial/git-part2/git%2020.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-20.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Now click the New Pull request button on this notification. It will take you to the New Pull request section where you can examine the pushed files in more detail.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 21.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-21.png"
+       src="/media/images/git-tutorial/git-part2/git%2021.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-21.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>now go to main branch. as you can see none of the code change that was being pushed on v2.0 and v2.1 is reflected here.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 22.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-22.png"
+       src="/media/images/git-tutorial/git-part2/git%2022.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-22.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Now consider, the real life scenario your Lead or manager will review the code change in both v2.0 and v2.1 then they will merge it with the main branch if they want to.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 23.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-23.png"
+       src="/media/images/git-tutorial/git-part2/git%2023.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-23.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>In web. The Main branch is still holding the old code. we have to merge those changes from v2.0 and v2.1 into main branch.</p>
+<p><strong>4. Merge Different Branches into Main Branch</strong><br>
+Let&rsquo;s merge code changes from both <code>v2.0</code> and <code>v2.1</code> into our main branch. Again verify the current branch. and checkout the branch to main branch.<br>
+After checking out to the main branch, we&rsquo;ll:</p>
+<ul>
+<li>Merge it with the first branch (<code>v2.0</code>) using <code>git merge &lt;branch_name&gt;</code>.</li>
+<li>Then merge it with the second branch (<code>v2.1</code>) using another <code>git merge &lt;branch_name&gt;</code> command.</li>
+<li>Alternatively, use one of these commands to merge both branches into main.</li>
+</ul>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 24.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-24.png"
+       src="/media/images/git-tutorial/git-part2/git%2024.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-24.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 25.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-25.png"
+       src="/media/images/git-tutorial/git-part2/git%2025.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-25.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#after checkout to main branch, merge main branch with the first branch (in my case its v2.0)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git merge &lt;&#34;provide the desired first branch&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># merge main branch with the second branch (in my case its v2.1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git merge &lt;&#34;provide the desired second branch&#34;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span></code></pre></div>
+</div>
+
+
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 26.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-26.png"
+       src="/media/images/git-tutorial/git-part2/git%2026.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-26.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+
+  
+  <style>
+    .custom-code {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      color: #333;
+    }
+
+    .custom-code pre {
+      background-color: transparent !important;
+      color: #333 !important;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    .custom-code .chroma {
+      background: none !important;
+      border: none;
+    }
+
+    .custom-code .chroma span {
+      background: none !important;
+    }
+  </style>
+
+
+<div class="custom-code">
+  
+  <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#use any of the command below to merge the both v2.0 and v2.1 into main branch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git push origin main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#or 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span><span style="display:flex;"><span>
+</span></span></code></pre></div>
+</div>
+
+
+<p><strong>5. Verify Main Branch Merge in GitHub or WebUI</strong><br>
+Now we will verify the code push in Github or WebUI.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 27.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-27.png"
+       src="/media/images/git-tutorial/git-part2/git%2027.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-27.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Timestamps from all merged files should align with those on <code>v2.0</code> and <code>v2.1</code>.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 28.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-28.png"
+       src="/media/images/git-tutorial/git-part2/git%2028.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-28.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>README.md&rsquo;s cron expression documentation will be displayed in the main branch project repo, proving that we successfully merged changes from both branches.</p>
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 29.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-29.png"
+       src="/media/images/git-tutorial/git-part2/git%2029.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-29.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+
+<style>
+  .responsive-image-container {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+  }
+
+  .image-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="responsive-image-container" onclick="openModalResponsive('\/media\/images\/git-tutorial\/git-part2\/git 30.png')">
+  <img id="responsiveImage/media/images/git-tutorial/git-part2/git-30.png"
+       src="/media/images/git-tutorial/git-part2/git%2030.png"
+       alt="my website"
+       style="border: 1px solid #ccc;">
+</div>
+
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeModalResponsive()">&times;</span>
+  <div class="image-modal-content">
+    <img id="modalImage">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const img = document.getElementById("responsiveImage\/media\/images\/git-tutorial\/git-part2\/git-30.png");
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    const widthDesktop = "800";
+    const heightDesktop = "500";
+    const widthMobile = "320";
+    const heightMobile = "200";
+
+    function applyResponsiveSize() {
+      const isMobile = window.innerWidth <= 768;
+      const width = isMobile ? widthMobile : widthDesktop;
+      const height = isMobile ? heightMobile : heightDesktop;
+      img.style.width = width + "px";
+      img.style.height = height + "px";
+    }
+
+    applyResponsiveSize();
+    window.addEventListener("resize", applyResponsiveSize);
+
+    let zoomLevel = 1, offsetX = 0, offsetY = 0, isDragging = false;
+    let startX, startY;
+
+    window.openModalResponsive = function (src) {
+      modal.style.display = "flex";
+      modalImage.src = src;
+      resetZoomAndPosition();
+    };
+
+    window.closeModalResponsive = function () {
+      modal.style.display = "none";
+      resetZoomAndPosition();
+    };
+
+    function resetZoomAndPosition() {
+      zoomLevel = 1;
+      offsetX = 0;
+      offsetY = 0;
+      modalImage.style.transform = "scale(1) translate(0px, 0px)";
+    }
+
+    function zoom(event) {
+      event.preventDefault();
+      let scaleAmount = event.deltaY > 0 ? 0.9 : 1.1;
+      zoomLevel = Math.min(Math.max(zoomLevel * scaleAmount, 1), 5);
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function startDrag(event) {
+      if (zoomLevel > 1) {
+        isDragging = true;
+        startX = event.clientX - offsetX;
+        startY = event.clientY - offsetY;
+        modalImage.style.cursor = "grabbing";
+      }
+    }
+
+    function drag(event) {
+      if (!isDragging) return;
+      offsetX = event.clientX - startX;
+      offsetY = event.clientY - startY;
+      modalImage.style.transform = `scale(${zoomLevel}) translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function stopDrag() {
+      isDragging = false;
+      modalImage.style.cursor = "grab";
+    }
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") closeModalResponsive();
+    }
+
+    modal.addEventListener("wheel", zoom);
+    modalImage.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", drag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("keydown", handleKeydown);
+  });
+</script>
+
+
+
+<p>Now click the New Pull request button again. You&rsquo;ll see &ldquo;The Branches are equal. The PR will be empty,&rdquo; which indicates all branches have been merged with the main branch.<br>
+Peace!</p>
+<hr>
+
+
+
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://arulbalaji-pro.github.io/" >
+    &copy;  Arul Balaji 2026 
+  </a>
+    <div>
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
