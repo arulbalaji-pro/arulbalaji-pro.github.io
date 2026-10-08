@@ -106,31 +106,87 @@
         
 
         
-        <div class="tc mt3">
-          <div class="dib bg-black-70 ba b--white-30 br-pill ph3 pv2">
-            <span class="f6 fw6 light-green mr2">🧅 Tor Mirror:</span>
-            <code id="onion-link" class="f7 white-90 mr2">uehbuuou2qj4izgf6oeti24qebsv6kfu3k643iq5fnidk5ipgwztoaqd.onion</code>
-            <button id="copy-btn" onclick="copyOnion()" class="f7 link dim br-pill ph2 pv1 white bg-dark-green bn pointer">Copy</button>
-          </div>
-          <div id="copy-msg" class="f7 light-green mt2" style="display: none;">✔ Copied to clipboard!</div>
-        </div>
+        <div class="tor-badge-container">
+  <span class="tor-label">🧅 Tor Mirror:</span>
+  <code id="onion-link" class="tor-link">uehbuuou2qj4izgf6oeti24qebsv6kfu3k643iq5fnidk5ipgwztoaqd.onion</code>
+  <button type="button" class="tor-copy-btn" onclick="copyTorLink()">Copy</button>
+</div>
 
-        <script>
-          function copyOnion() {
-            const url = document.getElementById('onion-link').innerText.trim();
-            navigator.clipboard.writeText('http://' + url).then(() => {
-              const msg = document.getElementById('copy-msg');
-              const btn = document.getElementById('copy-btn');
-              msg.style.display = 'block';
-              btn.innerText = 'Copied!';
-              setTimeout(() => {
-                msg.style.display = 'none';
-                btn.innerText = 'Copy';
-              }, 2500);
-            });
-          }
-        </script>
+<style>
+  .tor-badge-container {
+    display: inline-flex;
+    align-items: center;
+    max-width: 90vw;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    padding: 4px 10px;
+    gap: 8px;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+  }
 
+  .tor-label {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+   
+  .tor-link {
+    display: inline-block;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-family: monospace;
+    color: #e2e8f0;
+  }
+
+  @media (min-width: 640px) {
+    .tor-link {
+      max-width: 100%;  
+    }
+  }
+
+  .tor-copy-btn {
+    background-color: #2ea44f;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tor-copy-btn:hover {
+    background-color: #2c974b;
+  }
+</style>
+
+<script>
+  function copyOnion() {
+    const fullOnion = "uehbuuou2qj4izgf6oeti24qebsv6kfu3k643iq5fnidk5ipgwztoaqd.onion";
+    const fullUrl = 'http://' + fullOnion;
+
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      const btn = document.getElementById('copy-btn');
+      const msg = document.getElementById('copy-msg');
+
+      if (btn) btn.innerText = 'Copied!';
+      if (msg) msg.style.display = 'inline';
+
+      setTimeout(() => {
+        if (btn) btn.innerText = 'Copy';
+        if (msg) msg.style.display = 'none';
+      }, 2500);
+    }).catch(err => {
+      console.error('Clipboard copy failed: ', err);
+    });
+  }
+</script>
       </div>
     </div>
   </header>
