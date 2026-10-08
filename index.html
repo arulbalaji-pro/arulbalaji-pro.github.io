@@ -782,6 +782,37 @@ Check out my other projects on GitHub </a>
   </article>
   
   
+  <div class="center tc mb4 pa3 br2 bg-near-white measure-wide ba b--light-silver">
+    <p class="f6 fw6 ttu tracked gray mt0 mb2">🧅 Tor Onion Mirror</p>
+    <div class="flex items-center justify-center flex-wrap">
+      <code id="onion-link" class="f6 bg-white pa2 br1 ba b--moon-gray mr2 mb2 mb0-ns word-break">
+        7nrntpuqdhdzxlsc7yqyvebebl6x24y5mv7bwju4qgyhayvhlvtbgmid.onion
+      </code>
+      <button id="copy-btn" onclick="copyOnion()" class="f6 link dim br2 ph3 pv2 mb2 mb0-ns dib white bg-dark-gray bn pointer">
+        Copy Link
+      </button>
+    </div>
+    <span id="copy-msg" class="db f7 green mt2" style="display: none;">✔ Copied to clipboard!</span>
+  </div>
+
+  <script>
+    function copyOnion() {
+      const url = document.getElementById('onion-link').innerText.trim();
+      navigator.clipboard.writeText('http://' + url).then(() => {
+        const msg = document.getElementById('copy-msg');
+        const btn = document.getElementById('copy-btn');
+        msg.style.display = 'block';
+        btn.innerText = 'Copied!';
+        setTimeout(() => {
+          msg.style.display = 'none';
+          btn.innerText = 'Copy Link';
+        }, 2500);
+      });
+    }
+  </script>
+
+  
+  
   
   
   
