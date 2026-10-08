@@ -169,27 +169,25 @@
 </style>
 
 <script>
-  function copyOnion() {
+  function copyTorLink() {
     const fullOnion = "uehbuuou2qj4izgf6oeti24qebsv6kfu3k643iq5fnidk5ipgwztoaqd.onion";
-    const fullUrl = 'http://' + fullOnion;
+    const fullUrl = "http://" + fullOnion;
+    const btn = document.querySelector(".tor-copy-btn");
 
     navigator.clipboard.writeText(fullUrl).then(() => {
-      const btn = document.getElementById('copy-btn');
-      const msg = document.getElementById('copy-msg');
-
-      if (btn) btn.innerText = 'Copied!';
-      if (msg) msg.style.display = 'inline';
+      if (btn) btn.innerText = "Copied!";
 
       setTimeout(() => {
-        if (btn) btn.innerText = 'Copy';
-        if (msg) msg.style.display = 'none';
+        if (btn) btn.innerText = "Copy";
       }, 2500);
     }).catch(err => {
-      console.error('Clipboard copy failed: ', err);
+      console.error("Clipboard copy failed:", err);
     });
   }
 </script>
-      </div>
+
+
+  </div>
     </div>
   </header>
 
