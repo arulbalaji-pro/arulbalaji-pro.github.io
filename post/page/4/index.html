@@ -96,6 +96,33 @@
           Posts
         </h1>
         
+
+        
+        <div class="tc mt3">
+          <div class="dib bg-black-70 ba b--white-30 br-pill ph3 pv2">
+            <span class="f6 fw6 light-green mr2">🧅 Tor Mirror:</span>
+            <code id="onion-link" class="f7 white-90 mr2">7nrntpuqdhdzxlsc7yqyvebebl6x24y5mv7bwju4qgyhayvhlvtbgmid.onion</code>
+            <button id="copy-btn" onclick="copyOnion()" class="f7 link dim br-pill ph2 pv1 white bg-dark-green bn pointer">Copy</button>
+          </div>
+          <div id="copy-msg" class="f7 light-green mt2" style="display: none;">✔ Copied to clipboard!</div>
+        </div>
+
+        <script>
+          function copyOnion() {
+            const url = document.getElementById('onion-link').innerText.trim();
+            navigator.clipboard.writeText('http://' + url).then(() => {
+              const msg = document.getElementById('copy-msg');
+              const btn = document.getElementById('copy-btn');
+              msg.style.display = 'block';
+              btn.innerText = 'Copied!';
+              setTimeout(() => {
+                msg.style.display = 'none';
+                btn.innerText = 'Copy';
+              }, 2500);
+            });
+          }
+        </script>
+
       </div>
     </div>
   </header>
