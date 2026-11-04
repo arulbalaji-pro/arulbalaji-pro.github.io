@@ -1,0 +1,2 @@
+Rather than treating test fragility as a constant maintenance burden, we can embed **Agentic AI reflection loops** directly into the **Page Object Model (POM)** pattern. When an element interaction times out, the framework traps the error, gathers interactive DOM elements, requests a targeted locator from an LLM, and retries the action live without aborting the CI pipeline.
+
